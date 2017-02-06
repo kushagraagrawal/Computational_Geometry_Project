@@ -1,22 +1,5 @@
-class definitions:-
-    Point (for <x,y> points)
-        Constructors:-
-            Point();
-            Point(x,y);
-            Point(r,theta,const Point orig);
-            Point(const Point &A);
-    Polar_Point (for <r,theta> points)
-        Constructors:-
-            Polar_Point();
-            Polar_Point(r,theta);
-            Point(x,y,const Point &orig);
-
 "Utility.h"
-    signed_area (to check for left/right/colinearity)
-    file_read   (to read a set of points from a file to a vector/array)
-    file_write  (to write a set of points from a vector/array to a file)
     angle of an edge(two <x,y>points) wrt x axis
-    euclidean_Distance(between 2 <x,y> points)
     
 Define all classes,functions,etc under namespace cg
 Use std:: for std functions.
