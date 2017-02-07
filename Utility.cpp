@@ -1,4 +1,5 @@
 #include "Utility.h"
+#include<iomanip>
 namespace cg{
 	/**
 	Function to read a set of points from file and
@@ -26,8 +27,9 @@ namespace cg{
 			std::cerr << "Output File not found\n";
 			exit(1);
 		}
+		file << std::setprecision(15);
 		for(auto it=vect.begin();it!=vect.end();it++){
-			file << *it << "\n";
+			file << it->x << " " << it->y << "\n";
 		}
 	}
 
@@ -60,7 +62,6 @@ namespace cg{
 	in cartesian coordinate system.
 	*/
 	double polarAngle(const Point &a,const Point &b){
-		double angle = atan2(double(a.y-b.y),double(a.x-b.x));
-		return ((angle>=0)?angle:(angle + 2*PI));
+		return fmod((atan2(double(a.y-b.y),double(a.x-b.x)) + 2*PI),2*PI)* 180/PI;
 	}
 }

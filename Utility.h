@@ -5,6 +5,7 @@
 #include <vector>
 #include <cmath>
 #include "Point.h"
+
 static const double PI = 3.1415926535;
 
 namespace cg{

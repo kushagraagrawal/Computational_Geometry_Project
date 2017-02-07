@@ -24,7 +24,7 @@ bool compareTheta(const PolarPoint &a,const PolarPoint &b){
 
 int main(int argc,char *argv[]){
 
-	std::cout << std::setprecision(10);
+	//std::cout << std::setprecision(10);
 	
 	// Read from file
 	std::vector<cg::Point> p;
