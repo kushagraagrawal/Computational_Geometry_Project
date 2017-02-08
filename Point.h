@@ -20,6 +20,13 @@ namespace cg{
 	bool operator!=(const Point&, const Point&);
 	std::ostream& operator<<(std::ostream&, const Point&);
 	std::istream& operator>>(std::istream&, Point&);
+	
+	struct PolarPoint{
+		cg::Point point;
+		double r,theta;
+	};
+	
+	bool compareTheta(const PolarPoint &, const PolarPoint &);
 }
 
 #endif

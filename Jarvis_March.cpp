@@ -8,11 +8,6 @@ const double INF = 1e10;
 
 namespace cg{
 
-struct PolarPoint{
-	Point point;
-	double r,theta;
-};
-
 std::vector<Point> convex_hull_jarvis(const std::vector<Point>& S){
 	std::vector<Point> ch;
 	

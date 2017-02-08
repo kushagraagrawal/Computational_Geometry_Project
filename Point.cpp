@@ -54,4 +54,11 @@ namespace cg{
 	std::istream& operator>>(std::istream& in, Point& p){
 		return in >> p.x >> p.y;
 	}
+	
+	bool compareTheta(const PolarPoint &a,const PolarPoint &b){
+		bool condition1 = (a.theta < b.theta);
+		bool condition2 = (a.theta == b.theta);
+		bool condition3 = (a.r < b.r);
+		return (condition1 or (condition2 and condition3));
+	}
 }

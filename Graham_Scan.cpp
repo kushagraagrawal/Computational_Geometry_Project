@@ -8,30 +8,13 @@
 #include "Point.h"
 #include "Utility.h"
 
-#define newl std::cout << "\n"
-
-struct PolarPoint{
-	cg::Point point;
-	double r,theta;
-};
-
-bool compareTheta(const PolarPoint &a,const PolarPoint &b){
-	bool condition1 = (a.theta < b.theta);
-	bool condition2 = (a.theta == b.theta);
-	bool condition3 = (a.r < b.r);
-	return (condition1 or (condition2 and condition3));
-}
-
-int main(int argc,char *argv[]){
-
-	//std::cout << std::setprecision(10);
+namespace cg{
+std::vector<Point> convex_hull_graham(const std::vector<Point> & S){
+	// Copy S into new vector p
+	std::vector<Point> p = S;
 	
-	// Read from file
-	std::vector<cg::Point> p;
-	cg::readPointSet(argv[1],p);
-	
-	// Find bottom point in hull
-	cg::Point origin(p[0]);
+	// Find bottom most  point in p
+	Point origin(p[0]);
 	for(int i=1;i<p.size();i++){
 		if(p[i] < origin ){
 			origin = p[i];
@@ -43,22 +26,14 @@ int main(int argc,char *argv[]){
 	for(int i=0;i<p.size();i++){
 		PolarPoint a;
 		a.point = p[i];
-		a.r 	= cg::euclideanDistance(p[i],origin);
-		a.theta = cg::polarAngle(p[i],origin);
+		a.r 	= euclideanDistance(p[i],origin);
+		a.theta = polarAngle(p[i],origin);
 		vect.push_back(a);
 	}
-
-//	for(auto q:vect) std::cout<< q.point<<" "<<q.r<<" "<<q.theta<<"\n";
-	
 	
 	//sorting
 	std::sort(vect.begin(),vect.end(),compareTheta);
-	
-//	newl;
-	
-//	for(auto q:vect){	std::cout<< q.point<<" "<<q.r<<" "<<q.theta<<"\n";	}
-	
-	
+		
 	int n = vect.size();
 	bool valid[n];
 	std::fill(valid,valid+n,true);
@@ -79,7 +54,7 @@ int main(int argc,char *argv[]){
 	}
 	
 	// Find convex hull	
-	std::stack<cg::Point> stck;
+	std::stack<Point> stck;
 	stck.push(p[0]);
 	stck.push(p[1]);
 	stck.push(p[2]);
@@ -87,13 +62,13 @@ int main(int argc,char *argv[]){
 	n = p.size();
 	for(int k=3;k<n;k++){
 		while(true){
-			cg::Point t(stck.top());
+			Point tp(stck.top());
 			stck.pop();
-			cg::Point nt(stck.top());
-			if(turn_direction(nt,t,p[k])<=0)
+			Point next_tp(stck.top());
+			if(turn_direction(next_tp,tp,p[k])<=0)
 				continue;
 			else{
-				stck.push(t);
+				stck.push(tp);
 				break;
 			}
 		}
@@ -106,8 +81,24 @@ int main(int argc,char *argv[]){
 		p.push_back(stck.top());
 		stck.pop();
 	}
+	return p;
+}
+}
+
+
+
+int main(int argc,char *argv[]){
+
+	// Read from file
+	std::vector<cg::Point> p;
+	cg::readPointSet(argv[1],p);
+	std::cout << "Read File successfully.\n";
+	
+	std::vector<cg::Point> ch = cg::convex_hull_graham(p);
+	std::cout << "Computed convex hull using Graham Scan.\n";
 	
 	// write to file
-	writePointSet(argv[2],p);
-return 0;
+	cg::writePointSet(argv[2],ch);
+	std::cout << "File written successfully.\n";
+	return 0;
 }
