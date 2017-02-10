@@ -12,6 +12,9 @@ Point.o: Point.h Point.cpp
 
 Utility.o: Utility.h Utility.cpp
 	$(CPP) $(CFLAGS) -c Utility.cpp
+
+andrew.o: andrews.cpp Point.o Utility.o
+	$(CPP) $(CFLAGS) andrews.cpp Point.o Utility.o -o andrew.o
 	
 clean:
 	rm -f *.o *.out
