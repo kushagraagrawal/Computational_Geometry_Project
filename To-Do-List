@@ -1,6 +1,0 @@
-"Utility.h"
-    angle of an edge(two <x,y>points) wrt x axis
-    
-Define all classes,functions,etc under namespace cg
-Use std:: for std functions.
-Use "const &" keyword for function arguements if you don't intend to change their values. (Eg. const Point &A)
