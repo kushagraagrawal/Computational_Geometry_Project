@@ -1,8 +1,10 @@
+/** \file
+Contains defintions of functions in Point class.
+*/
+
 #include "Point.h"
 namespace cg{
-	/**
-	Constructors of Point Class
-	*/
+	
 	Point::Point(){
 		x = 0.0;
 		y = 0.0;
@@ -22,43 +24,12 @@ namespace cg{
 		x = p.x;
 		y = p.y;
 	}
-	
-	bool operator<(const Point& p1, const Point& p2){
-	    return (p1.y < p2.y) or (p1.y==p2.y and p1.x<p2.x);
-	}
-	
-	bool operator>(const Point& p1, const Point& p2){
-		return operator<(p2,p1);
-	}
-	
-	bool operator<=(const Point& p1, const Point& p2){
-		return !operator>(p1,p2);
-	}
 
-	bool operator>=(const Point& p1, const Point& p2){
-		return !operator<(p1,p2);
-	}
-
-	bool operator==(const Point& p1, const Point& p2){
-		return (p1.x == p2.x) and (p1.y == p2.y);
-	}
-
-	bool operator!=(const Point& p1, const Point& p2){
-		return !operator==(p1,p2);
-	}
-
-	std::ostream& operator<<(std::ostream& out, const Point& p){
-		return out << "(" << p.x << "," << p.y << ")";
+	std::ostream& operator<<(std::ostream& out, const Point& p){		return out << "(" << p.x << "," << p.y << ")";
 	}
 
 	std::istream& operator>>(std::istream& in, Point& p){
 		return in >> p.x >> p.y;
 	}
 	
-	bool compareTheta(const PolarPoint &a,const PolarPoint &b){
-		bool condition1 = (a.theta < b.theta);
-		bool condition2 = (a.theta == b.theta);
-		bool condition3 = (a.r < b.r);
-		return (condition1 or (condition2 and condition3));
-	}
 }

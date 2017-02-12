@@ -1,3 +1,7 @@
+/** \file
+Contains declaration of common utility fucntions.
+*/
+
 #ifndef UTILITY_H_INCLUDED
 #define UTILITY_H_INCLUDED
 
@@ -15,6 +19,8 @@ namespace cg{
 	int turn_direction(const Point&, const Point&, const Point&);
 	double euclideanDistance(const Point&,const Point&);
 	double polarAngle(const Point&,const Point&);
+	bool bottomOrLeft(const Point &,const Point &);
+	bool compareTheta(const PolarPoint &, const PolarPoint &);
 
 }
 

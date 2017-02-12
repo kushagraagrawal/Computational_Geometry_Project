@@ -1,3 +1,7 @@
+/** \file
+Contains the function definitions of common utility functions.
+*/
+
 #include "Utility.h"
 #include<iomanip>
 namespace cg{
@@ -63,5 +67,25 @@ namespace cg{
 	*/
 	double polarAngle(const Point &a,const Point &b){
 		return fmod((atan2(double(a.y-b.y),double(a.x-b.x)) + 2*PI),2*PI)* 180/PI;
+	}
+	
+	/**
+	Check if either
+	1. Point a lies below Point b, or
+	2. Both lie on same horizontal axis but a lies to the left.
+	*/
+	bool bottomOrLeft(const  cg::Point &a,const cg::Point &b){
+		return ((a.y < b.y) or (a.y == b.y and a.x < b.x));
+	}
+	
+	/**
+	Compare two polar points by their theta
+	*/
+	
+	bool compareTheta(const PolarPoint &a,const PolarPoint &b){
+		bool condition1 = (a.theta < b.theta);
+		bool condition2 = (a.theta == b.theta);
+		bool condition3 = (a.r < b.r);
+		return (condition1 or (condition2 and condition3));
 	}
 }
