@@ -50,12 +50,11 @@ namespace cg{
 	double polarAngle(const Point&,const Point&);
 	
 	/**
-	* Function to check where a stands with respect to b.
-	* <b> Input: </b> 2 points a and b.<br>
-	* <b> Output: </b> <ol> <li>True when Point a lies below Point b or Both lie on same horizontal axis but a lies to the left.</li>
-	* <li>False otherwise.</li></ol>
+	* Function to find bottommost point(or leftmost such point in case of a tie) in a point set defined in cartesian space.
+	* <b> Input: </b> Vector of points (point_set) .<br>
+	* <b> Output: </b> Index of bottommost point(or leftmost point in case of a tie) in the vector point_set.
 	*/
-	bool bottomOrLeft(const Point &,const Point &);
+	int indexOfBottomLeft(const std::vector<Point> &);
 	
 	/**
 	* Compare two polar points by their theta

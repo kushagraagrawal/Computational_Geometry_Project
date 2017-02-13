@@ -76,13 +76,19 @@ namespace cg{
 	}
 	
 	/**
-	* Function to check where a stands with respect to b.
-	* <b> Input: </b> 2 points a and b.<br>
-	* <b> Output: </b> <ol> <li>True when Point a lies below Point b or Both lie on same horizontal axis but a lies to the left.</li>
-	* <li>False otherwise.</li></ol>
+	* Function to find bottommost point(or leftmost such point in case of a tie) in a point set defined in cartesian space.
+	* <b> Input: </b> Vector of points (point_set) .<br>
+	* <b> Output: </b> Index of bottommost point(or leftmost point in case of a tie) in the vector point_set.
 	*/
-	bool bottomOrLeft(const  cg::Point &a,const cg::Point &b){
-		return ((a.y < b.y) or (a.y == b.y and a.x < b.x));
+	int indexOfBottomLeft(const std::vector<Point> & point_set){
+		int min_index=0;
+		for(int i=1;i<point_set.size();i++){
+			if(point_set[min_index].y > point_set[i].y)
+				min_index = i;
+			else if((point_set[min_index].y == point_set[i].y) and (point_set[min_index].x > point_set[i].x))
+				min_index = i;
+		}
+		return min_index;
 	}
 	
 	/**
