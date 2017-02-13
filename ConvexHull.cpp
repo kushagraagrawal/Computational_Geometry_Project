@@ -16,13 +16,16 @@ namespace cg{
 		std::vector<Point> temp = points;
 	
 		// Find bottommost point in temp_points
-		Point origin( temp[0] );
-		
+/*		Point origin( temp[0] );
+			
 		for(int i=1 ; i<temp.size() ; i++){
 			if( bottomOrLeft( temp[i], origin) ){
 				origin = temp[i];
 			}
 		}
+*/
+		int min_index = indexOfBottomLeft(points);
+		Point origin = points[min_index];
 	
 		// Store the corresponding polar coordinates of the points in temp in a new vector	
 		std::vector<PolarPoint> vect;
