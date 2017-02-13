@@ -94,8 +94,8 @@ namespace cg{
 	/**
 	* Lambda function used for the sort function in andrews algorithm.
 	* <b> Input: </b> Two points a and b belonging to set of points S. <br>
-	* <b> Output: </b> boolean value indicating whether a's x-coordinate is larger or not.
-	* If same, comparison is made on y-coordinate
+	* <b> Output: </b><ol><li>True if a's x-coordinate is larger than b or if both are same and a's y-coordinate is larger.</li>
+	* <li>False otherwise.</li>
 	*/	 
 	bool compareXY(const Point& a, const Point& b){
 	
