@@ -1,3 +1,7 @@
+/** \file
+Contains the function definitions of three Convex Hull Algorithms i.e Graham Scan, Jarvis March and Andrew's algorithm.
+*/
+
 #ifndef CONVEXHULL_H_INCLUDED
 #define CONVEXHULL_H_INCLUDED
 

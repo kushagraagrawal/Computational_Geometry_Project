@@ -1,3 +1,7 @@
+/** \file
+Contains the function declarations of three Convex Hull Algorithms i.e Graham Scan, Jarvis March and Andrew's algorithm.
+*/
+
 #include "ConvexHull.h"
 #include <vector>
 #include <algorithm>
