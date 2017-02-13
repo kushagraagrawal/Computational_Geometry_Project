@@ -91,25 +91,24 @@ namespace cg{
 		}
 		return temp;
 	}
-	
-	
 	/**
-	 * Andrew's Algorithm to find the Convex Hull of a set of points S.
-	 * <b> Input: </b> A finite set of points(S) in cartesian plane, S = {s1,s2,...sn}.<br>
-	 * <b> Output:</b> The Convex Hull of S in Clockwise order.
-	 * */
-	 
-	 bool compareXY(const Point& a, const Point& b){
-	/**
-	 * Lambda Function to sort the points according to x coordinates.
-	 * If x coordinates are same, y coordinates are used
-	 * */
+	* Lambda function used for the sort function in andrews algorithm.
+	* <b> Input: </b> Two points a and b belonging to set of points S. <br>
+	* <b> Output: </b> boolean value indicating whether a's x-coordinate is larger or not.
+	* If same, comparison is made on y-coordinate
+	*/	 
+	bool compareXY(const Point& a, const Point& b){
+	
 		bool condition1 = (a.x > b.x);
 		bool condition2 = (a.x == b.x);
 		bool condition3 = (a.y > b.y);
 		return (condition1 or(condition2 and condition3));
 	}
-
+	/**
+	 * Andrew's Algorithm to find the Convex Hull of a set of points S.
+	 * <b> Input: </b> A finite set of points(S) in cartesian plane, S = {s1,s2,...sn}.<br>
+	 * <b> Output:</b> The Convex Hull of S in Clockwise order.
+	 * */
 	std::vector<Point> andrews(const std::vector<Point>& point_set){
 		/**
 		 * Main Function to calculate Convex Hull of a set of points "point_set" using Andrew's Algorithm.

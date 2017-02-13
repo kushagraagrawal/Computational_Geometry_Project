@@ -5,9 +5,11 @@ Contains the function definitions of common utility functions.
 #include "Utility.h"
 #include<iomanip>
 namespace cg{
+	
 	/**
-	Function to read a set of points from file and
-	store it in a vector.
+	* Function to read a set of points from file and store it in a vector.
+	* <b> Input: </b> File name and set of points. <br>
+	* <b> Output: </b> Parses the file "file_name" and writes the point to the vector vect
 	*/
 	void readPointSet(char *file_name, std::vector<Point> & vect){
 		std::ifstream file(file_name);
@@ -22,8 +24,9 @@ namespace cg{
 	}
 	
 	/**
-	Function to write a set of points
-	from a vector to an output file.
+	* Function to write a set of points from a vector to an output file.
+	* <b> Input: </b> File name and set of points.<br>
+	* <b> Output: </b> Writes the vector "vect" to the file "file_name"	
 	*/
 	void writePointSet(char *file_name, const std::vector<Point> & vect){
 		std::ofstream file(file_name);
@@ -38,8 +41,9 @@ namespace cg{
 	}
 
 	/**
-	Function to find the turning direction of a	set of three points in the sequence p,q,r.
-	It returns 1 for LEFT turn, 0 for COLLINEARITY and, -1 for RIGHT turn
+	* Function to find the turning direction of a	set of three points in the sequence p,q,r.
+	* <b> Input: </b> Three points p,q,r. <br>
+	* <b> Output: </b> 1 for Left Turn, 0 if the points are Collinear, -1 for Right Turn.
 	*/
 	int turn_direction(const Point& p, const Point& q, const Point& r){
 		// determinant value
@@ -54,34 +58,39 @@ namespace cg{
 	}
 	
 	/**
-	Function to find the euclidean distance between
-	two points in Cartesian coordinate system.
+	* Function to find the euclidean distance between two points in Cartesian coordinate system.
+	* <b> Input: </b> 2 points a and b.<br>
+	* <b> Output: </b> Euclidean distance between a and b.
 	*/
 	double euclideanDistance(const Point &a,const Point &b){
 		return sqrt((a.x-b.x)*(a.x-b.x) + (a.y-b.y)*(a.y-b.y) );
 	}
 	
 	/**
-	Function to find the polar angle of two points
-	in cartesian coordinate system.
+	* Function to find the polar angle of two points in cartesian coordinate system.
+	* <b> Input: </b> 2 points a and b. <br>
+	* <b> Output: </b> polar angle between a and b in cartesian coordinate system.
 	*/
 	double polarAngle(const Point &a,const Point &b){
 		return fmod((atan2(double(a.y-b.y),double(a.x-b.x)) + 2*PI),2*PI)* 180/PI;
 	}
 	
 	/**
-	Check if either
-	1. Point a lies below Point b, or
-	2. Both lie on same horizontal axis but a lies to the left.
+	* Function to check where a stands with respect to b.
+	* <b> Input: </b> 2 points a and b.<br>
+	* <b> Output: </b> <ol> <li>True when Point a lies below Point b or Both lie on same horizontal axis but a lies to the left.</li>
+	* <li>False otherwise.</li></ol>
 	*/
 	bool bottomOrLeft(const  cg::Point &a,const cg::Point &b){
 		return ((a.y < b.y) or (a.y == b.y and a.x < b.x));
 	}
 	
 	/**
-	Compare two polar points by their theta
+	* Compare two polar points by their theta
+	* <b> Input: </b> 2 Polar Points a and b. <br>
+	* <b> Output: </b> <ol><li> True if a's angle is less than b's theta or both are equal but a's radius is less than b's radius</li>
+	* <li> False otherwise</li></ol>
 	*/
-	
 	bool compareTheta(const PolarPoint &a,const PolarPoint &b){
 		bool condition1 = (a.theta < b.theta);
 		bool condition2 = (a.theta == b.theta);

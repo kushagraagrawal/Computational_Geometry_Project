@@ -18,7 +18,18 @@ namespace cg{
 	* <b> Output:</b> The Convex Hull of S in anti-clockwise order.
 	*/
 	std::vector<Point> convexHullGrahamScan(const std::vector<Point> & points);
+	/**
+	* Lambda function used for the sort function in andrews algorithm.
+	* <b> Input: </b> Two points a and b belonging to set of points S. <br>
+	* <b> Output: </b> boolean value indicating whether a's x-coordinate is larger or not.
+	* If same, comparison is made on y-coordinate
+	*/
 	bool compareXY(const Point& a, const Point& b);
+	/**
+	 * Andrew's Algorithm to find the Convex Hull of a set of points S.
+	 * <b> Input: </b> A finite set of points(S) in cartesian plane, S = {s1,s2,...sn}.<br>
+	 * <b> Output:</b> The Convex Hull of S in Clockwise order.
+	 * */
 	std::vector<Point> andrews(const std::vector<Point>& point_set);
 	
 }
