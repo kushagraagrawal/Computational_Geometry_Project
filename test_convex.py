@@ -39,7 +39,7 @@ hull_vertices = []
 
 for x in s:
 	y = x.split(' ')
-	print(y)
+	# print(y)
 	h.append([float(y[0]),float(y[1])])
 
 

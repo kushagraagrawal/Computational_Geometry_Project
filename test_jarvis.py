@@ -15,7 +15,7 @@ from matplotlib.patches import Polygon
 
 exec_file = str(sys.argv[1])
 
-n = 10000 				# total points
+n = 100000 				# total points
 m = int(sys.argv[2])	# points on CH
 radius = float(sys.argv[3])
 
@@ -43,7 +43,7 @@ with open('test_cases.txt','w') as f:
 		f.write(str(x1)+" "+str(y1)+"\n")
 
 proc = subprocess.call([exec_file + ' test_cases.txt test_output.txt'], shell = True)
-
+'''
 points = np.array(points)
 
 with open('test_output.txt','r') as f:
@@ -85,4 +85,4 @@ plt.savefig('convex.png')
 print("Image successfully saved.")
 plt.show()
 #plt.close(1)
-
+'''

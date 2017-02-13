@@ -9,23 +9,15 @@ namespace cg{
 	* <b> Input: </b> A finite set of points(S) in cartesian plane, S = {s1,s2,...sn}.<br>
 	* <b> Output:</b> The Convex Hull of S in anti-clockwise order.
 	*/
-	std::vector<Point> convexHullGrahamScan(const std::vector<Point> & points){
+	std::vector<Point> convexHullGrahamScan(const std::vector<Point> & point_set){
 	
 		// Copy points vector into new vector temp
 		// temp will contain the Convex Hull of points vector
-		std::vector<Point> temp = points;
+		std::vector<Point> temp = point_set;
 	
-		// Find bottommost point in temp_points
-/*		Point origin( temp[0] );
-			
-		for(int i=1 ; i<temp.size() ; i++){
-			if( bottomOrLeft( temp[i], origin) ){
-				origin = temp[i];
-			}
-		}
-*/
-		int min_index = indexOfBottomLeft(points);
-		Point origin = points[min_index];
+		// Find bottommost point in point_set
+		int min_index = indexOfBottomLeft(point_set);
+		Point origin = point_set[min_index];
 	
 		// Store the corresponding polar coordinates of the points in temp in a new vector	
 		std::vector<PolarPoint> vect;
@@ -39,7 +31,7 @@ namespace cg{
 			vect.push_back(a);
 		}
 	
-		// Sort the points in increasing order of theta
+		// Sort the points in increasing order of theta (in case of a tie, sort by r)
 		std::sort(vect.begin(), vect.end(), compareTheta);
 		
 		// Create a bool array to keep valid points in vect
@@ -62,6 +54,15 @@ namespace cg{
 			}
 		}
 	
+		// Corner case for |point_set|=2
+		if(temp.size()==0){
+			std::cerr << "Point set is empty. Please check input file\n";
+			exit(1);
+		}
+		else if(temp.size()<=2){
+			return temp;
+		}
+		
 		// Find convex hull	using Graham Scan
 		std::stack<Point> stck;
 		stck.push(temp[0]);
@@ -99,27 +100,31 @@ namespace cg{
 	 * Andrew's Algorithm to find the Convex Hull of a set of points S.
 	 * <b> Input: </b> A finite set of points(S) in cartesian plane, S = {s1,s2,...sn}.<br>
 	 * <b> Output:</b> The Convex Hull of S in Clockwise order.
-	 * */
-	std::vector<Point> andrews(const std::vector<Point>& point_set){
-		/**
+	 * 
+	 */
+	std::vector<Point> convexHullAndrews(const std::vector<Point>& point_set){
+		/*
 		 * Main Function to calculate Convex Hull of a set of points "point_set" using Andrew's Algorithm.
-		 **/
+		 *
+		 */
 		int n = point_set.size();
 		std::vector<Point> point_set_sorted = point_set;
 		
 		//sorting on the basis of x-coordinate, if they are equal, sorted on the basis of y-coordinate
 		std::sort(point_set_sorted.begin(),point_set_sorted.end(),compareXY);
 		
-		/**
+		/*
 		 * Declaration of the required vectors for the algorithm, Lupper, Llower and L
-		 * */
+		 *
+		 */
 		std::vector<Point> lup;
 		std::vector<Point> ldown;
 		
 		
-		 /**
+		 /*
 		  * Pushing to Lupper now
-		  * */
+		  *
+		  */
 		 lup.push_back(point_set_sorted[0]);
 		 lup.push_back(point_set_sorted[1]);
 		 
@@ -128,51 +133,110 @@ namespace cg{
 			 lup.push_back(point_set_sorted[i]);
 			 
 			 while(lup.size() > 2){
-				/**
+				/*
 				 * We can only check for right or left turns if the vector contains more than 2 elements.
 				 * The function turn_direction will return 1 for Left Turn, 0 for Collinearity and -1 for RIGHT TURN
-				 * */
+				 *
+				 */
 				if(turn_direction(*(lup.rbegin()),*(lup.rbegin()+1),*(lup.rbegin()+2))!= -1){
-					/**
+					/*
 					 * The middle point of the last three points is deleted since the three points do not make a right turn
-					 * */
-							
-							lup.erase(lup.end() -2);
+					 *
+					 */	
+						lup.erase(lup.end() -2);
 				}
 				else
 					break;
 			 }
 		 }
-		 /**
+		 /*
 		  * Pushing to Ldown now
-		  * */
+		  *
+		  */
 		ldown.push_back(point_set_sorted[n-1]);
 		ldown.push_back(point_set_sorted[n-2]);
 		for(int i=n-3;i>=0;i--){
 			ldown.push_back(point_set_sorted[i]);
 			while(ldown.size() > 2){
-				/**
+				/*
 				 * We can only check for right or left turns if the vector contains more than 2 elements.
 				 * The function turn_direction will return 1 for Left Turn, 0 for Collinearity and -1 for RIGHT TURN
-				 * */
+				 *
+				 */
 				if(turn_direction(*(ldown.rbegin()),*(ldown.rbegin()+1),*(ldown.rbegin()+2))!= -1){
-					/**
+					/*
 					 * The middle point of the last three points is deleted since the three points do not make a right turn
-					 * */
+					 *
+					 */
 					ldown.erase(ldown.end() -2);
 				}
 				else
 					break;
 			}
 		}
-		/**
+		/*
 		 * To avoid duplicacy with Lupper, the first and the last element of Ldown will be deleted.
-		 * */
+		 *
+		 */
 		ldown.erase(ldown.begin());
 		ldown.pop_back();		
 		lup.insert(std::end(lup), std::begin(ldown),std::end(ldown));
 		return lup;
 	}	
-	 
+	
+	/**
+	* Jarvis March (Gift Wrapping) Algorithm to find the Convex Hull of a set of points S.
+	* <b> Input: </b> A finite set of points(S) in cartesian plane, S = {s1,s2,...sn}.<br>
+	* <b> Output:</b> The Convex Hull of S in anti-clockwise order.
+	*/
+
+	std::vector<Point> convexHullJarvisMarch(const std::vector<Point>& point_set){
+		
+		std::vector<Point> ch; //Convex Hull Output
+	
+		// Trivial case for |point_set| <= 2
+		if(point_set.size()==0){
+			std::cerr << "Point set is empty. Please check input file\n";
+			exit(1);
+		}
+		else if(point_set.size()<=2){
+			return point_set;
+		}
+	
+		//Determine Initial Origin
+		int k0 = indexOfBottomLeft(point_set);
+		int k = k0;
+
+		double theta0 = 0.0; //angle of previous edge, relative to which all angles are computed
+		do{
+
+			ch.push_back(point_set[k]);
+			int j;
+			double theta, r, theta_min = INF, r_min = INF;
+			for(int i = 0; i < point_set.size(); i++){
+				if(i != k){
+					theta = fmod(polarAngle(point_set[i], *(ch.rbegin())) - theta0 + 360.0, 360.0);//ensures angles are between zero and 360
+					r = euclideanDistance(point_set[i], *(ch.rbegin()));
+					//check if the point makes the smallest angle
+					if(theta < theta_min){
+						theta_min = theta;
+						r_min = r;
+						j = i;
+					} else if(theta == theta_min){ //handling for equal angle, closest point is chosen
+						if(r < r_min){
+							r_min = r;
+							j = i;
+						}
+					}
+				}
+			}	
+			k = j;
+	
+			//updating angle newest edge of convex hull makes with x-axis
+			theta0 = polarAngle(*(ch.rbegin()), *(ch.rbegin()+1));
+		} while(k!=k0);
+
+		return ch;
+	}
 }
 

@@ -10,9 +10,10 @@ Contains declaration of common utility fucntions.
 #include <cmath>
 #include "Point.h"
 
-static const double PI = 3.1415926535;
+
 
 namespace cg{
+	static const double PI = 3.1415926535;
 	
 	/**
 	* Function to read a set of points from file and store it in a vector.

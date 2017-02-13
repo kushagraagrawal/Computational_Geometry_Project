@@ -15,7 +15,7 @@ $ make graham.o input_file.txt output_file.txt
 #include <vector>
 #include <stack>
 #include <algorithm>
-#include <ctime>
+#include <chrono>
 
 #include "Point.h"
 #include "Utility.h"
@@ -23,17 +23,18 @@ $ make graham.o input_file.txt output_file.txt
 
 int main(int argc,char *argv[]){
 
+	std::cout<<std::setprecision(15);
+	
 	// Read from file
 	std::vector<cg::Point> p;
-	
-	clock_t beg = clock();
 	cg::readPointSet(argv[1],p);
+	std::cout << "Read file successfully\n";
 	
-	std::cout << "Read File successfully in " << (float)(clock()-beg)/CLOCKS_PER_SEC << "\n";
-	
-	beg = clock();
+	std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
 	std::vector<cg::Point> ch = cg::convexHullGrahamScan(p);
-	std::cout << "Computed convex hull using Graham Scan in " << (float)(clock()-beg)/CLOCKS_PER_SEC << "\n";
+	std::cout<<"Completed convex hull using Graham Scan.\n";
+	std::chrono::steady_clock::time_point end= std::chrono::steady_clock::now();
+	std::cout << "Time taken to compute Convex Hull is = " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count()<<" ms" <<std::endl;
 	
 	// write to file
 	cg::writePointSet(argv[2],ch);

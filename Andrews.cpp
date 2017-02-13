@@ -15,6 +15,7 @@ $ make andrews.o input_file.txt output_file.txt
 #include "Utility.h"
 #include "ConvexHull.h"
 #include <vector>
+#include <limits>
 #include <iostream>
 #include <list>
 #include <algorithm>
@@ -25,17 +26,17 @@ $ make andrews.o input_file.txt output_file.txt
 int main(int argc, char* argv[]){
 
 	std::cout<<std::setprecision(15);
-	
+
 	std::vector<cg::Point> p;
 	cg::readPointSet(argv[1],p);
 	std::cout<<"File read successfully.\n";
 	
 	// to calculate time taken
 	std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
-	std::vector<cg::Point> ch = cg::andrews(p);
+	std::vector<cg::Point> ch = cg::convexHullAndrews(p);
 	std::cout<<"Completed convex hull using Andrew's.\n";
 	std::chrono::steady_clock::time_point end= std::chrono::steady_clock::now();
-	std::cout << "Time taken to compute Convex Hull is = " << std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count()<<"ms" <<std::endl;
+	std::cout << "Time taken to compute Convex Hull is = " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count()<<"ms" <<std::endl;
 	
 	
 	//write to file
