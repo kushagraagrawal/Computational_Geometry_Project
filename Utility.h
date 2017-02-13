@@ -64,6 +64,14 @@ namespace cg{
 	* <li> False otherwise</li></ol>
 	*/
 	bool compareTheta(const PolarPoint &, const PolarPoint &);
+	
+	/**
+	* Lambda function used for the sort function in andrews algorithm.
+	* <b> Input: </b> Two points a and b belonging to set of points S. <br>
+	* <b> Output: </b><ol><li>True if a's x-coordinate is larger than b or if both are same and a's y-coordinate is larger.</li>
+	* <li>False otherwise.</li>
+	*/
+	bool compareXY(const Point& a, const Point& b);
 
 }
 

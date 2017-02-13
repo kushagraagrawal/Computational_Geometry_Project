@@ -97,4 +97,18 @@ namespace cg{
 		bool condition3 = (a.r < b.r);
 		return (condition1 or (condition2 and condition3));
 	}
+	
+	/**
+	* Lambda function used for the sort function in andrews algorithm.
+	* <b> Input: </b> Two points a and b belonging to set of points S. <br>
+	* <b> Output: </b><ol><li>True if a's x-coordinate is larger than b or if both are same and a's y-coordinate is larger.</li>
+	* <li>False otherwise.</li>
+	*/	 
+	bool compareXY(const Point& a, const Point& b){
+	
+		bool condition1 = (a.x > b.x);
+		bool condition2 = (a.x == b.x);
+		bool condition3 = (a.y > b.y);
+		return (condition1 or(condition2 and condition3));
+	}
 }

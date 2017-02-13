@@ -91,19 +91,7 @@ namespace cg{
 		}
 		return temp;
 	}
-	/**
-	* Lambda function used for the sort function in andrews algorithm.
-	* <b> Input: </b> Two points a and b belonging to set of points S. <br>
-	* <b> Output: </b><ol><li>True if a's x-coordinate is larger than b or if both are same and a's y-coordinate is larger.</li>
-	* <li>False otherwise.</li>
-	*/	 
-	bool compareXY(const Point& a, const Point& b){
 	
-		bool condition1 = (a.x > b.x);
-		bool condition2 = (a.x == b.x);
-		bool condition3 = (a.y > b.y);
-		return (condition1 or(condition2 and condition3));
-	}
 	/**
 	 * Andrew's Algorithm to find the Convex Hull of a set of points S.
 	 * <b> Input: </b> A finite set of points(S) in cartesian plane, S = {s1,s2,...sn}.<br>
