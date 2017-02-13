@@ -1,3 +1,16 @@
+/** \file
+Contains the main function to run Jarvis March Algorithm. 
+This program file reads a set of points in the cartesian space from the first command line arguement,
+computes the Convex Hull using Jarvis March Algorithm and writes the output to file specified in the second command line arguement. <br>
+To run, execute the following command in the directory containing the source code using the terminal:-
+\code
+$ make jarvis.o input_file.txt output_file.txt
+\endcode
+
+<b>Note:</b> It creates a new file if <b><em> output_file.txt </em></b> does not exist, or overwrites the existing file.
+
+*/
+
 #include <vector>
 #include <iostream>
 #include <iomanip>
