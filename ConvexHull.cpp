@@ -11,7 +11,47 @@ namespace cg{
 	/**
 	* Graham Scan's Algorithm to find the Convex Hull of a set of points S.
 	* <b> Input: </b> A finite set of points(S) in cartesian plane, S = {s1,s2,...sn}.<br>
-	* <b> Output:</b> The Convex Hull of S in anti-clockwise order.
+	* <b> Output:</b> The Convex Hull of S in anti-clockwise order. <br>
+	*/
+	
+	/** Here is a small example on how to use this function.
+	\code
+		#include "ConvexHull.h"
+		#include "Utility.h"
+		#include "Point.h"
+		#include <iostream>
+
+		int main(int argc,char* argv[]){
+	
+			double a[6][2] = {{4,5},{0,0},{1.1,0},{0,2.1},{0.8,0.2},{20,50}};
+			std::vector<cg::Point> v;
+			cg::Point temp;
+			for (int i=0;i<6;i++){
+				temp.x = a[i][0];
+				temp.y = a[i][1];
+				v.push_back(temp);
+			}
+	
+			std::vector<cg::Point> result;
+	
+			std::cout << "Using Graham's Scan Algorithm to find Convex Hull.\n";
+			result = cg::convexHullGrahamScan(v);
+	
+			for(int i=0;i<result.size();i++){
+				std::cout << result[i].x <<" "<< result[i].y << std::endl;
+			}	
+			return 0;
+		}
+	\endcode
+	Output <br>
+	\code
+		Using Graham's Scan Algorithm to find Convex Hull.
+		0 2.1
+		20 50
+		4 5
+		1.1 0
+		0 0
+	\endcode
 	*/
 	std::vector<Point> convexHullGrahamScan(const std::vector<Point> & point_set){
 	
