@@ -1,5 +1,5 @@
 /** \file
-Contains the main function to run Graham Scan's Algorithm. This program file reads a set of points in the cartesian space from the first command line arguement, computes the Convex Hull using Graham Scan's Algorithm and writes the output to file specified in the second command line arguement. <br>
+Contains the main function to run the algorithms to find convex hull of a set of points. This program file reads a set of points in the cartesian space from the first command line arguement, computes the Convex Hull using Graham Scan's Algorithm and writes the output to file specified in the second command line arguement. <br>
 To run, execute the following command in the directory containing the source code using the terminal:-
 \code
 $ make graham.o input_file.txt output_file.txt
