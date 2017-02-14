@@ -13,10 +13,11 @@ import random
 from matplotlib import pyplot as plt
 from matplotlib.patches import Polygon
 
-exec_file = str(sys.argv[1])
+exec_file = './main.o'
+choice = sys.argv[1]		# choice = '1' or '2' or '3'
 
-n = 100000 				# total points
-m = int(sys.argv[2])	# points on CH
+n = 100000 					# total points
+m = int(sys.argv[2])		# points on CH
 radius = float(sys.argv[3])
 
 try:
@@ -42,8 +43,8 @@ with open('test_cases.txt','w') as f:
 		points.append([float(x1),float(y1)])
 		f.write(str(x1)+" "+str(y1)+"\n")
 
-proc = subprocess.call([exec_file + ' test_cases.txt test_output.txt'], shell = True)
-'''
+proc = subprocess.call([exec_file + ' test_cases.txt test_output.txt '+ choice], shell = True)
+
 points = np.array(points)
 
 with open('test_output.txt','r') as f:
@@ -85,4 +86,4 @@ plt.savefig('convex.png')
 print("Image successfully saved.")
 plt.show()
 #plt.close(1)
-'''
+

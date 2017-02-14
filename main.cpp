@@ -50,6 +50,7 @@ int main(int argc,char *argv[]){
 				std::cout<<"Completed convex hull using Andrew's Algorithm.\n";	
 				break;
 		default: std::cerr << "Third agruement should be 1 or 2 or 3\n";
+				exit(1);
 	}
 
 	std::chrono::steady_clock::time_point end= std::chrono::steady_clock::now();

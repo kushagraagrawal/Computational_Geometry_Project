@@ -12,7 +12,10 @@ import math
 from matplotlib import pyplot as plt
 from matplotlib.patches import Polygon
 
-exec_file = str(sys.argv[1])
+
+exec_file = './main.o'
+choice = sys.argv[1]
+
 n = int(sys.argv[2])
 max_val = float(sys.argv[3])
 
@@ -27,7 +30,7 @@ with open('test_cases.txt','w') as f:
 	for p in points:
 		f.write(str(p[0])+" "+str(p[1])+"\n")
 
-proc = subprocess.call([exec_file + ' test_cases.txt test_output.txt'], shell = True)
+proc = subprocess.call([exec_file + ' test_cases.txt test_output.txt '+choice ], shell = True)
 
 with open('test_output.txt','r') as f:
 	text = f.read()
@@ -58,8 +61,7 @@ pts = points[hull_vertices]
 
 k = 1.0
 color = 'cyan'
-poly = Polygon(k*(np.array(pts)- cent) + cent,
-               facecolor=color, edgecolor='black', alpha=0.2)
+poly = Polygon(k*(np.array(pts)- cent) + cent, facecolor=color, edgecolor='black', alpha=0.2)
 #poly.set_capstyle('butt')
 plt.gca().add_patch(poly)
 plt.plot(pts[:,0], pts[:,1], 'ko')
