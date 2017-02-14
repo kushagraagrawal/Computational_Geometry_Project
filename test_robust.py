@@ -9,43 +9,26 @@ import subprocess
 import sys
 import os
 import math
-import random
 from matplotlib import pyplot as plt
 from matplotlib.patches import Polygon
 
 exec_file = './main.o'
-choice = sys.argv[1]		# choice = '1' or '2' or '3'
-
-n = 100000 					# total points
-m = int(sys.argv[2])		# points on CH
-radius = float(sys.argv[3])
+choice = sys.argv[1]
+n = int(sys.argv[2])
+max_val = float(sys.argv[3])
 
 try:
 	os.remove('test_cases.txt')
 except Exception: 
 	pass
 
-points = []
-
+points = np.array([[0,0],[1,0],[0,1],[1,1],[0.5,1e-30]])
 
 with open('test_cases.txt','w') as f:
-	for i in range(m):
-		theta = i * ((2*math.pi)/(float(m)))		# (i*2PI)/m
-		x1 = radius * math.cos(theta)
-		y1 = radius * math.sin(theta)
-		points.append([float(x1),float(y1)])
-		f.write(str(x1)+" "+str(y1)+"\n")
-	for j in range(n-m):
-		r = random.random()*(radius/(2**(0.5)))
-		theta = 2*math.pi*random.random()
-		x1 = r * math.cos(theta)
-		y1 = r * math.sin(theta)
-		points.append([float(x1),float(y1)])
-		f.write(str(x1)+" "+str(y1)+"\n")
+	for p in points:
+		f.write(str(p[0])+" "+str(p[1])+"\n")
 
-proc = subprocess.call([exec_file + ' test_cases.txt test_output.txt '+ choice], shell = True)
-
-points = np.array(points)
+proc = subprocess.call([exec_file + ' test_cases.txt test_output.txt '+choice], shell = True)
 
 with open('test_output.txt','r') as f:
 	text = f.read()
@@ -57,7 +40,7 @@ hull_vertices = []
 
 for x in s:
 	y = x.split(' ')
-	print(y)
+	# print(y)
 	h.append([float(y[0]),float(y[1])])
 
 
@@ -71,6 +54,7 @@ for j in range(len(hull)):
 print(len(hull_vertices))
 
 plt.plot(points[:,0], points[:,1], 'r+')
+plt.title('Robustness test(Middle Point above the line)')
 cent = np.mean(points, 0)
 pts = points[hull_vertices]
 
@@ -81,7 +65,7 @@ poly = Polygon(k*(np.array(pts)- cent) + cent,
 #poly.set_capstyle('butt')
 plt.gca().add_patch(poly)
 plt.plot(pts[:,0], pts[:,1], 'ko')
-plt.axis(radius*np.array([-1.2, 1.2, -1.2, 1.2]))
+plt.axis(max_val*np.array([-1.2, 1.2, -1.2, 1.2]))
 plt.savefig('convex.png')
 print("Image successfully saved.")
 plt.show()
