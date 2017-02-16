@@ -130,13 +130,16 @@ namespace cg{
 			}
 			stck.push(temp[k]);
 		}
-
+		
 		// Transfer the points on Convex Hull from stack, back to temp vector.
 		temp.clear();
 		while(!stck.empty()){
 			temp.push_back(stck.top());
 			stck.pop();
 		}
+		
+		// reverse the vector to keep anti-clockwise order
+		std::reverse(temp.begin(),temp.end());
 		return temp;
 	}
 	
