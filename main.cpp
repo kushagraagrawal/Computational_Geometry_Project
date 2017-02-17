@@ -34,7 +34,8 @@ int main(int argc,char *argv[]){
 	// Read from file
 
 	cg::readPointSet(input_file,point_set);
-	
+	for(auto x:point_set)
+	std::cout << x <<"\n";
 	std::cout << "Read file successfully\n";
 	
 	std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();

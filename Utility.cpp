@@ -72,7 +72,7 @@ namespace cg{
 	* <b> Output: </b> polar angle between a and b in cartesian coordinate system.
 	*/
 	double polarAngle(const Point &a,const Point &b){
-		return fmod((atan2(double(a.y-b.y),double(a.x-b.x)) + 2*PI),2*PI)* 180/PI;
+		return fmod((atan2(double(a.y-b.y),double(a.x-b.x)) + 2*M_PI),2*M_PI)* 180/M_PI;
 	}
 	
 	/**
