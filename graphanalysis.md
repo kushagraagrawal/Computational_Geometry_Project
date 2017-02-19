@@ -1,6 +1,6 @@
 ![Points graph](images/points.png)
 
-Number of Points|Graham-Scan|Andrews|Jarvis March
+Number of Points|Graham-Scan time (in us)|Andrews time (in us)|Jarvis March time (in us)
 --------------- | --------- | ----- | ----------
 10|58|48|61.2
 100|244|230.4|497.8
@@ -13,8 +13,8 @@ All the three algorithms were made to run on a given number of points 5 times, e
 
 ![Vertices graph](images/vertices.png)
 
-Number of vertices|Graham-Scan|Andrews|Jarvis March
------------------ | --------- | ----- | ----------
+Number of vertices|Graham-Scan time (in us)|Andrews time (in us)|Jarvis March time (in us)
+----------------- | --------- | ----- | ---------- 
 10|161413|210374|238600
 100|162104|209545|2369044
 1000|162210|209957|23435829
