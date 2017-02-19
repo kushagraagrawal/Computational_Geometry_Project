@@ -21,6 +21,10 @@ namespace cg{
 		while((file >> p)){
 			vect.push_back(p);
 		}
+		if(vect.size()==0){
+			std::cerr << "\nInput File \"" << file_name << "\" is empty. Please check it.\n";
+			exit(1);
+		}
 	}
 	
 	/**

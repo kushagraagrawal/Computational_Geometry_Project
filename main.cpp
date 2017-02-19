@@ -23,7 +23,7 @@ $ make graham.o input_file.txt output_file.txt
 
 int main(int argc,char *argv[]){
 
-	std::cout<<std::setprecision(15);
+	std::cout<<std::setprecision(16);
 	
 	char *input_file = argv[1];			// file to read input points
 	char *output_file = argv[2];		// file to write Convex Hull
@@ -34,8 +34,8 @@ int main(int argc,char *argv[]){
 	// Read from file
 
 	cg::readPointSet(input_file,point_set);
-	for(auto x:point_set)
-	std::cout << x <<"\n";
+//	for(auto x:point_set)
+//		std::cout << x <<"\n";					// REMOVE THIS
 	std::cout << "Read file successfully\n";
 	
 	std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();

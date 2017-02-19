@@ -1,73 +1,68 @@
-# HOW TO RUN
-# ...$ make [graham.o | jarvis.o]
-# ...$ python test_convex.py [./graham.o | ./jarvis.o] 100 10 
-#	100 = number of points in set
-#	10 =  range of points (-10 to 10, both x and y)
-
 import numpy as np
 import subprocess
 import sys
 import os
 import math
+import glob
 from matplotlib import pyplot as plt
 from matplotlib.patches import Polygon
 
+point_gen = {'all-txt': 1, 'gaussian': 2, 'uniform' : 3, 'op-sensitive' : 4}
+algo_select = {'graham' : 1, 'jarvis' : 2, 'andrew' : 3}
 
-exec_file = './main.o'
-choice = sys.argv[1]
+def genCircle(n,m):
+	return 0
 
-n = int(sys.argv[2])
-max_val = float(sys.argv[3])
-
-try:
-	os.remove('test_cases.txt')
-except Exception: 
-	pass
-
-points = 2*max_val*(np.random.rand(n, 2)-np.array([0.5,0.5]))
-
-with open('test_cases.txt','w') as f:
-	for p in points:
-		f.write(str(p[0])+" "+str(p[1])+"\n")
-
-proc = subprocess.call([exec_file + ' test_cases.txt test_output.txt '+choice ], shell = True)
-
-with open('test_output.txt','r') as f:
-	text = f.read()
-
-s = text.split('\n')
-s.pop()
-h = []
-hull_vertices = []
-
-for x in s:
-	y = x.split(' ')
-	# print(y)
-	h.append([float(y[0]),float(y[1])])
-
-
-hull = np.array(h)
-
-for j in range(len(hull)):
-	for i in range(len(points)):
-		if(np.all(np.isclose(points[i,:], hull[j,:]))):
-			hull_vertices.append(i)
-
-print(len(hull_vertices))
-
-plt.plot(points[:,0], points[:,1], 'r+')
-cent = np.mean(points, 0)
-pts = points[hull_vertices]
-
-k = 1.0
-color = 'cyan'
-poly = Polygon(k*(np.array(pts)- cent) + cent, facecolor=color, edgecolor='black', alpha=0.2)
-#poly.set_capstyle('butt')
-plt.gca().add_patch(poly)
-plt.plot(pts[:,0], pts[:,1], 'ko')
-plt.axis(max_val*np.array([-1.2, 1.2, -1.2, 1.2]))
-plt.savefig('convex.png')
-print("Image successfully saved.")
-plt.show()
-#plt.close(1)
-
+if (__name__=="__main__"):
+	exec_file = str(sys.argv[1])
+	algo = algo_select.get(str(sys.argv[2]),0)
+	test_type = point_gen.get(str(sys.argv[3]),0)
+	input_file = []
+	if (test_type == 0 or algo == 0):
+		print('Invalid arguments. Aborting.\n')
+		exit()
+	
+	try:
+		os.mkdir('test_convex')
+	except Exception: 
+		pass
+	
+	if(test_type == 1):
+		input_file = glob.glob('./test_convex/*.txt')
+		n_tests = len(input_file)
+	else:
+		n_tests = int(sys.argv[4])
+		n = int(sys.argv[5])
+		if(test_type == 4):
+			m = int(sys.argv[6])
+		else:
+			seed = int(sys.argv[6])
+			r = np.random.RandomState(seed)
+			a = float(sys.argv[7])
+			b = float(sys.argv[8])
+	
+	if(test_type > 1):
+		for i in range(n_tests):
+			input_file.append('./test_convex/test_case_'+str(i)+'.txt')
+			
+			try:
+				os.remove(input_file[i])
+			except Exception: 
+				pass
+			
+			if(test_type == 2):
+				points = r.normal(a,b, size = (n,2))
+			elif(test_type == 3):
+				points = (a-b)*r.random_sample((n,2)) + a
+			else:
+				points = genCircle(n,m)
+			
+			with open(input_file[i],'w') as f:
+				for p in points:
+					f.write(str(p[0])+" "+str(p[1])+"\n")
+			seed = seed + 10
+	
+	for i in range(n_tests):
+		output_file = input_file[i][:-4] + '_output.txt'
+		proc = subprocess.call([exec_file  + ' ' + input_file[i] + ' ' + output_file + ' '+ str(algo)], shell = True)
+		print('Test #' + str(i) + ' completed.\n')
