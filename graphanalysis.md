@@ -12,6 +12,7 @@ Number of Points|Graham-Scan|Andrews|Jarvis March
 All the three algorithms were made to run on a given number of points 5 times, each time the points  were generated randomly, and the average of the running time was taken. From the graph, it is clear that Andrew’s and Graham Scan Algorithm are taking almost the same time for all the sets of points. On the other hand, Jarvis March on average takes more time than the other two algorithms. This is because the time consuming step in Graham and Andrews algorithm ,which is the step to sort the points , is run only once whereas in case of Jarvis March, the step to compute polar angle, takes the most time and is repeated a lot of times.
 
 ![Vertices graph](images/vertices.png)
+
 Number of vertices|Graham-Scan|Andrews|Jarvis March
 ----------------- | --------- | ----- | ----------
 10|161413|210374|238600
