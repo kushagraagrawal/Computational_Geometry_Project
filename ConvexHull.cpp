@@ -80,8 +80,7 @@ namespace cg{
 		
 		// Create a bool array to keep valid points in vect
 		int n = vect.size();
-		bool valid[n];
-		std::fill(valid, valid+n, true);
+		std::vector<bool> valid(n,true);
 	
 		// Check for invalid points in vect
 		for(int i=1 ; i<n; i++){
@@ -130,13 +129,16 @@ namespace cg{
 			}
 			stck.push(temp[k]);
 		}
-
+		
 		// Transfer the points on Convex Hull from stack, back to temp vector.
 		temp.clear();
 		while(!stck.empty()){
 			temp.push_back(stck.top());
 			stck.pop();
 		}
+		
+		// reverse the vector to keep anti-clockwise order
+		std::reverse(temp.begin(),temp.end());
 		return temp;
 	}
 	
@@ -248,9 +250,7 @@ namespace cg{
 		}
 	
 		//Determine Initial Origin
-		int k0 = indexOfBottomLeft(point_set);
-		int k = k0;
-
+		int k0 = indexOfBottomLeft(point_set), k = k0, count = 0;
 		double theta0 = 0.0; //angle of previous edge, relative to which all angles are computed
 		do{
 
@@ -278,7 +278,8 @@ namespace cg{
 	
 			//updating angle newest edge of convex hull makes with x-axis
 			theta0 = polarAngle(*(ch.rbegin()), *(ch.rbegin()+1));
-		} while(k!=k0);
+			count++;
+		} while(k!=k0 and count < point_set.size());
 
 		return ch;
 	}
