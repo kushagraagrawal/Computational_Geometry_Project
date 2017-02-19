@@ -53,7 +53,7 @@ Algorithm:
 Reference: A. M. Andrew, "Another Efficient Algorithm for Convex Hulls in Two Dimensions", Info. Proc. Letters 9, 216-219 (1979).
 </pre>
 
-### Jarvis March
+# Jarvis March
 Jarvis March (or gift wrapping algorithm) is an algorithm to compute the convex hull of a given set of points. Initially, the convex hull is empty. It starts from the bottommost point and repeatedly chooses the point which makes the least angle with respect to the edge of the convex hull which was discovered last. The line segment with end points as the latest discovered point on the convex hull and the point being considered is used to measure the angle.
 
 ```
