@@ -4,6 +4,7 @@ import sys
 import os
 import math
 import glob
+import random
 from matplotlib import pyplot as plt
 from matplotlib.patches import Polygon
 
@@ -11,7 +12,20 @@ point_gen = {'all-txt': 1, 'gaussian': 2, 'uniform' : 3, 'op-sensitive' : 4}
 algo_select = {'graham' : 1, 'jarvis' : 2, 'andrew' : 3}
 
 def genCircle(n,m):
-	return 0
+	points = []
+	radius = 10
+	for i in range(m):
+		theta = i * ((2*math.pi)/(float(m)))		# (i*2PI)/m
+		x1 = radius * math.cos(theta)
+		y1 = radius * math.sin(theta)
+		points.append([float(x1),float(y1)])
+	for j in range(n-m):
+		r = random.random()*(radius/(2**(0.5)))
+		theta = 2*math.pi*random.random()
+		x1 = r * math.cos(theta)
+		y1 = r * math.sin(theta)
+		points.append([float(x1),float(y1)])
+	return np.array(points)
 
 if (__name__=="__main__"):
 	exec_file = str(sys.argv[1])
@@ -60,7 +74,8 @@ if (__name__=="__main__"):
 			with open(input_file[i],'w') as f:
 				for p in points:
 					f.write(str(p[0])+" "+str(p[1])+"\n")
-			seed = seed + 10
+			if(test_type != 4):
+				seed = seed + 10
 	
 	for i in range(n_tests):
 		output_file = input_file[i][:-4] + '_output.txt'
