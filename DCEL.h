@@ -21,7 +21,10 @@ namespace cg{
 		int face_id;
 		int nextedge_id;
 		int prevedge_id;
+	
 	};
+	
+	// DCEL CLASS
 	class DCEL{
 		public:
 			std::vector<vertex> vertex_record;
@@ -33,12 +36,16 @@ namespace cg{
 			DCEL(const std::vector<cg::Point> &point_set);
 			std::vector<int> verticesOfFace(int fid);
 			std::vector<int> edgesOfVertex(int vid);
-			void split_face(int eid,int vid);
+			int commonFace(const int vid1,const int vid2);
+			void addEdge(const int vid1,const int vid2);
+			int findEdge(int vid,int fid);
+			bool adjacentVertices(const int vid1,const int vid2);
 			
 			// Only for debugging purpose
 			void printVertexRecord(void);
 			void printEdgeRecord(void);
 			void printFaceRecord(void);
+			
 
 	};
 }

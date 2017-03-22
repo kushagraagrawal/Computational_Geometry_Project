@@ -5,8 +5,61 @@ Contains defintions of functions in DCEL(Doubly Connected Edge List) class.
 #include "Point.h"
 #include "DCEL.h"
 #include <iostream>
+#include <algorithm>
 
 namespace cg{
+	
+	int DCEL::commonFace(const int vid1,const int vid2){
+		// create visited array for the faces
+		int f_size = face_record.size();
+		bool visited[f_size];
+		std::fill(visited,visited+f_size,false);
+		
+		std::vector<int> edges_ID1 = edgesOfVertex(vid1);
+		for(auto x:edges_ID1){
+			visited[edge_record[x].face_id]=true;
+		}
+		
+		std::vector<int> edges_ID2 = edgesOfVertex(vid2);
+		std::vector<int> common;
+		for(auto x:edges_ID2){
+			if(edge_record[x].face_id!=0 && visited[edge_record[x].face_id])		// exclude outer face i.e f[0]
+				common.push_back(edge_record[x].face_id);
+		}
+		if(common.size()==1)
+			return common[0];
+		else{
+			std::cerr << "Not exactly one common face b/w " << vid1 << " & " << vid2 << "\n";
+			return -1;
+		}
+	}
+	// find edge using vertex_id and face_id
+	int DCEL::findEdge(int vid,int fid){
+		std::vector<int> edges_vid = edgesOfVertex(vid);
+		for(auto x:edges_vid){
+			if(edge_record[x].face_id == fid){
+				return x;
+			}
+		}
+		std::cerr << "No edge with vertex " << vid << " & face " << fid <<"\n";
+		return -1;
+	}
+	
+	bool DCEL::adjacentVertices(const int vid1,const int vid2){
+		int fid = commonFace(vid1,vid2);
+		int eid1 = findEdge(vid1,fid);
+		int eid2 = findEdge(vid2,fid);
+		
+		// No common face or no edge with given vertex and face
+		if(fid==-1 || eid1==-1 || eid2==-1)
+			return false;
+		// check if one edge is next to other, or vice-versa.
+		if(edge_record[eid1].nextedge_id == eid2 || edge_record[eid2].nextedge_id == eid1)
+			return true;
+		else
+			return false;
+	}
+
 
 	DCEL::DCEL(){;}
 	DCEL::~DCEL(){;}
@@ -93,10 +146,54 @@ namespace cg{
 		return edge_ids;
 	}
 	
-	void split_face(int eid,int vid){
-		;
+	// Add an edge between two vertices. Two half edges are formed between vertex(vid1) and vertex(vid2).
+	void DCEL::addEdge(const int vid1,const int vid2){
+		
+		int fid = this->commonFace(vid1,vid2);
+		int eid1 = this->findEdge(vid1,fid);
+		int eid2 = this->findEdge(vid2,fid);		
+		std::cout << "fid="<<fid <<" " << "eid1=" << eid1 << " " << "eid2=" << eid2 << "\n";
+		
+		cg::face new_face;
+		new_face.edge_id = eid1;
+		face_record.push_back(new_face);		// insert new face
+		
+		face_record[fid].edge_id = eid2;		//check for modifications later
+		
+		int indexh1 = edge_record.size();
+		int indexh2 = indexh1+1;
+		
+		cg::edge h1,h2;
+		h1.origin_id = vid1;
+		h1.twinedge_id = indexh2;
+		h1.face_id = fid;
+		h1.nextedge_id = eid2;
+		h1.prevedge_id = edge_record[eid1].prevedge_id;
+		
+		h2.origin_id = vid2;
+		h2.twinedge_id = indexh1;
+		h2.face_id = face_record.size()-1;
+		h2.nextedge_id = eid1;
+		h2.prevedge_id = edge_record[eid2].prevedge_id;
+		
+		edge_record.push_back(h1);
+		edge_record.push_back(h2);
+		
+		edge_record[edge_record[eid1].prevedge_id].nextedge_id = indexh1;
+		edge_record[edge_record[eid2].prevedge_id].nextedge_id = indexh2;
+		edge_record[eid1].prevedge_id = indexh2;
+		edge_record[eid2].prevedge_id = indexh1;
+		
+		std::cout << "Hello\n";
+		while(eid1!=indexh2){
+			std::cout << eid1 << " " << eid2 << "\n";
+			edge_record[eid1].face_id = face_record.size()-1;
+			eid1 = edge_record[eid1].nextedge_id;
+		}
 	}
 	
+	
+// ****************************************************************************	
 	// ONLY FOR DEBUGGING
 	void DCEL::printVertexRecord(void){
 		std::cout << "Point\t" << "One edge\n";
