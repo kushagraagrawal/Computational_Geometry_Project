@@ -50,6 +50,7 @@ namespace cg{
 	*/
 	double polarAngle(const Point&,const Point&);
 	
+	double polarAngle(const Point &a,const Point &b,const Point&c);
 	/**
 	* Function to find bottommost point(or leftmost such point in case of a tie) in a point set defined in cartesian space.
 	* <b> Input: </b> Vector of points (point_set) .<br>

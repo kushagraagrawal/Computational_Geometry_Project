@@ -80,6 +80,18 @@ namespace cg{
 	}
 	
 	/**
+	* Function to find the polar angle of two points in cartesian coordinate system.
+	* <b> Input: </b> 2 points a and b. <br>
+	* <b> Output: </b> polar angle between a and b in cartesian coordinate system.
+	*/
+	double polarAngle(const Point &a,const Point &b,const Point&c){
+		double theta1 = polarAngle(b,a);
+		double theta2 = polarAngle(c,b);
+		return fmod((180.0 + theta1-theta2+360),360);
+	}
+	
+	
+	/**
 	* Function to find bottommost point(or leftmost such point in case of a tie) in a point set defined in cartesian space.
 	* <b> Input: </b> Vector of points (point_set) .<br>
 	* <b> Output: </b> Index of bottommost point(or leftmost point in case of a tie) in the vector point_set.
