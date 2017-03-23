@@ -46,7 +46,7 @@ namespace cg{
 	<b> Input: </b>  An object of DCEL class i.e D, index of the vertex, an object of Status class. <br>
 	<b> Output: </b> none.
 	*/	
-	void handle_start_vertex(cg::DCEL &D,int index,cg::Status &tau){
+	void handle_start_vertex(cg::DCEL &D,int index,cg::Status &tau,const int vertex_type[] ){
 		std::pair<cg::Point,cg::Point> edge;
 		const int v_size = D.vertex_record.size();
 		edge.first  = D.vertex_record[index].point;
@@ -59,13 +59,14 @@ namespace cg{
 	<b> Input: </b>  An object of DCEL class i.e D, index of the vertex, an object of Status class. <br>
 	<b> Output: </b> none.
 	*/
-	void handle_end_vertex(cg::DCEL &D,int index,cg::Status &tau){
+	void handle_end_vertex(cg::DCEL &D,int index,cg::Status &tau,const int vertex_type[]){
 		std::pair<cg::Point,cg::Point> edge;
 		const int v_size = D.vertex_record.size();
 		edge.first  = D.vertex_record[(index-1+v_size)%v_size].point;
 		edge.second = D.vertex_record[index].point;
 		int helper = tau.getHelper(edge);
-		if(helper == MERGE_VERTEX)
+		std::cout << "helper("<< index << ") = " << helper << "\n";
+		if(vertex_type[helper] == MERGE_VERTEX)
 			D.addEdge(index,helper);
 		tau.remove(edge);
 	}
@@ -75,7 +76,7 @@ namespace cg{
 	<b> Input: </b>  An object of DCEL class i.e D, index of the vertex, an object of Status class. <br>
 	<b> Output: </b> none.
 	*/	
-	void handle_split_vertex(cg::DCEL &D,int index,cg::Status &tau){
+	void handle_split_vertex(cg::DCEL &D,int index,cg::Status &tau,const int vertex_type[]){
 		cg::Point v = D.vertex_record[index].point;
 		auto edge = tau.findEdgeToLeft(v);
 		int helper = tau.getHelper(edge);
@@ -95,8 +96,8 @@ namespace cg{
 	<b> Input: </b>  An object of DCEL class i.e D, index of the vertex, an object of Status class. <br>
 	<b> Output: </b> none.
 	*/	
-	void handle_merge_vertex(cg::DCEL &D,int index,cg::Status &tau){
-		handle_end_vertex(D,index,tau);	
+	void handle_merge_vertex(cg::DCEL &D,int index,cg::Status &tau,const int vertex_type[]){
+		handle_end_vertex(D,index,tau,vertex_type);	
 		cg::Point v = D.vertex_record[index].point;
 		auto edge = tau.findEdgeToLeft(v);
 		int helper = tau.getHelper(edge);
@@ -111,7 +112,7 @@ namespace cg{
 	<b> Input: </b>  An object of DCEL class i.e D, index of the vertex, an object of Status class. <br>
 	<b> Output: </b> none.
 	*/	
-	void handle_regular_vertex(cg::DCEL &D,int index,cg::Status &tau){
+	void handle_regular_vertex(cg::DCEL &D,int index,cg::Status &tau,const int vertex_type[]){
 		bool interior_right;
 		int v_size = D.vertex_record.size();
 		cg::Point prev = D.vertex_record[(index-1+v_size)%v_size].point;
@@ -121,15 +122,17 @@ namespace cg{
 			interior_right = true;
 		else
 			interior_right = false;
+		std::cout << "interior is " << ((interior_right)? "in" : "not in") << " right\n";
 		if(interior_right){
-			handle_end_vertex(D,index,tau);
-			handle_start_vertex(D,index,tau);			
+			handle_end_vertex(D,index,tau,vertex_type);
+			handle_start_vertex(D,index,tau,vertex_type);			
 		}
 		else{
 			cg::Point v = D.vertex_record[index].point;
 			auto edge = tau.findEdgeToLeft(v);
 			int helper = tau.getHelper(edge);
-			if(helper == MERGE_VERTEX){
+			std::cout << "helper("<< index << ") = " << helper << "\n";
+			if(vertex_type[helper] == MERGE_VERTEX){
 				D.addEdge(index,helper);
 			}
 			tau.setHelper(edge,index);	
@@ -154,6 +157,7 @@ namespace cg{
 		int vertex_type[(D.vertex_record).size()];
 		for(int i=0;i<(D.vertex_record).size();i++){
 			vertex_type[i] = typeOfVertex(D,i);		// type of vertex with ith index, in D's vertex_record
+			std::cout << D.vertex_record[i].point << " " << vertex_type[i] <<"\n";
 			Q.push(D.vertex_record[i]);
 		}
 		std::cout << "Vertices successfully pushed into Q\n";
@@ -162,16 +166,17 @@ namespace cg{
 			cg::vertex v = Q.top();
 			Q.pop();
 			int index = v.edge_id;		// edge_id is same as vertex_id
+			std::cout << "Handling " << index << "\n";
 			switch(vertex_type[index]){
-				case START_VERTEX:	handle_start_vertex(D,index,tau);
+				case START_VERTEX:	handle_start_vertex(D,index,tau,vertex_type);
 									break;
-				case END_VERTEX:	handle_end_vertex(D,index,tau);
+				case END_VERTEX:	handle_end_vertex(D,index,tau,vertex_type);
 									break;
-				case SPLIT_VERTEX:	handle_split_vertex(D,index,tau);
+				case SPLIT_VERTEX:	handle_split_vertex(D,index,tau,vertex_type);
 									break;
-				case MERGE_VERTEX:	handle_merge_vertex(D,index,tau);
+				case MERGE_VERTEX:	handle_merge_vertex(D,index,tau,vertex_type);
 									break;					
-				case REG_VERTEX:	handle_regular_vertex(D,index,tau);
+				case REG_VERTEX:	handle_regular_vertex(D,index,tau,vertex_type);
 									break;
 			}
 		}
