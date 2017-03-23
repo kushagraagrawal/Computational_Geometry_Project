@@ -99,12 +99,13 @@ namespace cg{
 	void handle_merge_vertex(cg::DCEL &D,int index,cg::Status &tau,const int vertex_type[]){
 		handle_end_vertex(D,index,tau,vertex_type);	
 		cg::Point v = D.vertex_record[index].point;
-		auto edge = tau.findEdgeToLeft(v);
-		int helper = tau.getHelper(edge);
-		if(helper == MERGE_VERTEX){
+		auto edge_left = tau.findEdgeToLeft(v);
+		std:: cout << edge_left.first << " " << edge_left.second << "\n";
+		int helper = tau.getHelper(edge_left);
+		if(vertex_type[helper] == MERGE_VERTEX){
 			D.addEdge(index,helper);
 		}
-		tau.setHelper(edge,index);	
+		tau.setHelper(edge_left,index);	
 	}
 	
 	/**
@@ -166,7 +167,7 @@ namespace cg{
 			cg::vertex v = Q.top();
 			Q.pop();
 			int index = v.edge_id;		// edge_id is same as vertex_id
-			std::cout << "Handling " << index << "\n";
+			std::cout << "---------------------\nHandling " << index << "\n";
 			switch(vertex_type[index]){
 				case START_VERTEX:	handle_start_vertex(D,index,tau,vertex_type);
 									break;
