@@ -37,9 +37,9 @@ namespace cg{
 	int turn_direction(const Point&, const Point&, const Point&);
 	
 	/**
-	* Function to find the euclidean distance between two points in Cartesian coordinate system.
-	* <b> Input: </b> 2 points a and b.<br>
-	* <b> Output: </b> Euclidean distance between a and b.
+	* Function to find the polar angle of two points in cartesian coordinate system.
+	* <b> Input: </b> 2 points i.e. a and b. <br>
+	* <b> Output: </b> polar angle between a and b in cartesian coordinate system.
 	*/
 	double euclideanDistance(const Point&,const Point&);
 	
@@ -50,7 +50,13 @@ namespace cg{
 	*/
 	double polarAngle(const Point&,const Point&);
 	
+	/**
+	* Function to find the interior angle formed by the three points of a simple polygon(in Anti-clockwise order) in cartesian coordinate system.
+	* <b> Input: </b> 3 points i.e a, b and c of a simple polygon in anti-clockwise order. <br>
+	* <b> Output: </b> Interior angle of the polygon, formed by these three points.
+	*/
 	double polarAngle(const Point &a,const Point &b,const Point&c);
+	
 	/**
 	* Function to find bottommost point(or leftmost such point in case of a tie) in a point set defined in cartesian space.
 	* <b> Input: </b> Vector of points (point_set) .<br>
@@ -70,7 +76,7 @@ namespace cg{
 	* Lambda function used for the sort function in andrews algorithm.
 	* <b> Input: </b> Two points a and b belonging to set of points S. <br>
 	* <b> Output: </b><ol><li>True if a's x-coordinate is larger than b or if both are same and a's y-coordinate is larger.</li>
-	* <li>False otherwise.</li>
+	* <li>False otherwise.</li></ol>
 	*/
 	bool compareXY(const Point& a, const Point& b);
 

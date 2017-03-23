@@ -8,7 +8,12 @@ Contains defintions of functions in DCEL(Doubly Connected Edge List) class.
 #include <algorithm>
 
 namespace cg{
-	
+	/**
+	A function to find the common face between two vertices.
+	<b> Input:  </b> Two indexes of the two vertices in the vertex table(vertex_record). <br>
+	<b> Output: </b> index of the common face in face table(face_record) if only one common face exists. If there is no common
+	face or more than one common faces, it returns -1.
+	*/
 	int DCEL::commonFace(const int vid1,const int vid2){
 		// create visited array for the faces
 		int f_size = face_record.size();
@@ -33,7 +38,12 @@ namespace cg{
 			return -1;
 		}
 	}
-	// find edge using vertex_id and face_id
+	
+	/**
+	A function to find the edge on the boundary of a face, originating from a vertex.
+	<b> Input:  </b> index of a face in the face_record, index of a vertex in the vertex_record <br>
+	<b> Output: </b> index of the edge from the input vertex, on the boundary of the input face.
+	*/
 	int DCEL::findEdge(int vid,int fid){
 		std::vector<int> edges_vid = edgesOfVertex(vid);
 		for(auto x:edges_vid){
@@ -45,6 +55,11 @@ namespace cg{
 		return -1;
 	}
 	
+	/**
+	A bool function to check if two vertces are adjacent.
+	<b> Input:  </b> indexes of two vertices in the vertex_record. <br>
+	<b> Output: </b> <em> true </em> if the two vertices are adjacent, <em> false </em> otherwise.
+	*/
 	bool DCEL::adjacentVertices(const int vid1,const int vid2){
 		int fid = commonFace(vid1,vid2);
 		int eid1 = findEdge(vid1,fid);
@@ -60,10 +75,21 @@ namespace cg{
 			return false;
 	}
 
-
+	/**
+	An empty Constructor.
+	*/
 	DCEL::DCEL(){;}
+	
+	/**
+	A Deconstructor.
+	*/
 	DCEL::~DCEL(){;}
-	// DCEL constructor with vector of points in ACW order
+	
+	/**
+	A constructor to build DCEL from a simple polygon(in Anti-clockwise order).
+	<b> Input: </b> A vector of objects of Point class, representing a polygon in Anti-clockwise order. <br>
+	<b> Output: </b> none.
+	*/
 	DCEL::DCEL(const std::vector<cg::Point> &point_set){
 		int n = point_set.size();
 		
@@ -109,6 +135,11 @@ namespace cg{
 		face_record.push_back(std::move(f1));		
 	}
 	
+	/**
+	A function to find all vertices of a face.
+	<b> Input:  </b> index of a face in the face_record. <br>
+	<b> Output: </b> A vector of indexes of all vertices on the boundary of the face.
+	*/
 	// find the vertices of a face 
 	std::vector<int> DCEL::verticesOfFace(int fid){
 		if(fid >= face_record.size()){
@@ -126,7 +157,11 @@ namespace cg{
 		return vertices;
 	}
 	
-	//	find the edges originating from a vertex
+	/**
+	A function to find all edges originating from a vertex.
+	<b> Input:  </b> index of a vertex in the vertex_record. <br>
+	<b> Output: </b> A vector of indexes of all edges originating from the vertex.
+	*/
 	std::vector<int> DCEL::edgesOfVertex(int vid){
 		if(vid >= vertex_record.size()){
 			std::cerr<< "Vertex index " << vid << " out of bounds\n";
@@ -145,7 +180,12 @@ namespace cg{
 		}
 		return edge_ids;
 	}
-	
+	/**
+	A function to add an edge(two half-edges) between two vertices.
+	These vertices must be non-adjacent and must have a common face. <br>
+	<b> Input: </b> indexes of two vertices which need to be connected with a diagonal(two twin half-edges). <br>
+	<b> Output: </b> none.
+	*/
 	// Add an edge between two vertices. Two half edges are formed between vertex(vid1) and vertex(vid2).
 	void DCEL::addEdge(const int vid1,const int vid2){
 		
@@ -184,9 +224,7 @@ namespace cg{
 		edge_record[eid1].prevedge_id = indexh2;
 		edge_record[eid2].prevedge_id = indexh1;
 		
-		std::cout << "Hello\n";
 		while(eid1!=indexh2){
-			std::cout << eid1 << " " << eid2 << "\n";
 			edge_record[eid1].face_id = face_record.size()-1;
 			eid1 = edge_record[eid1].nextedge_id;
 		}
@@ -195,6 +233,12 @@ namespace cg{
 	
 // ****************************************************************************	
 	// ONLY FOR DEBUGGING
+	
+	/**
+	A function to print vertex table of the DCEL.
+	<b> Input: </b> none. <br>
+	<b> Output: </b> none.
+	*/
 	void DCEL::printVertexRecord(void){
 		std::cout << "Point\t" << "One edge\n";
 		for(auto x:vertex_record){
@@ -202,6 +246,11 @@ namespace cg{
 		}
 	}
 	
+	/**
+	A function to print edge table of the DCEL.
+	<b> Input: </b> none. <br>
+	<b> Output: </b> none.
+	*/
 	void DCEL::printEdgeRecord(void){
 		std::cout << "Edge_ID\t" << "Orig_ID\t" << "Twin_ID\t" << "Face_ID\t" << "Next_ID\t" << "Prev_ID\n" ;
 		int i=0;
@@ -210,6 +259,11 @@ namespace cg{
 		}
 	}
 	
+	/**
+	A function to print face table of the DCEL.
+	<b> Input: </b> none. <br>
+	<b> Output: </b> none.
+	*/
 	void DCEL::printFaceRecord(void){
 		std::cout << "Face_ID\t" << "One edge\n";
 		int i=0;

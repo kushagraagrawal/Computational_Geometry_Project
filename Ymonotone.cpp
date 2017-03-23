@@ -1,3 +1,7 @@
+/** \file
+Contains the function definitions of the monotonization of a regular polygon stored in a DCEL.
+*/
+
 #include "Ymonotone.h"
 #include "DCEL.h"
 #include "Status.h"
@@ -7,7 +11,13 @@
 #include <utility>
 
 namespace cg{
-	// return true if A lies below B, using sweep_line comparison
+
+	/**
+	A bool function to check if first point lies below second point.
+	<b> Input: </b>  Two objects of Point class i.e A and B.
+	<b> Output: </b> <em> true </em> if Point A lies below Point B(or to the right if both are on same horizontal line),
+					 <em> false </em> otherwise.
+	*/
 	bool below(const cg::Point &A,const cg::Point &B){
 		return ((A.y < B.y) or ( (A.y==B.y and A.x > B.x)));
 	}
@@ -30,7 +40,12 @@ namespace cg{
 		else
 			return REG_VERTEX;
 	}
-	
+
+	/**
+	A function to handle a start vertex in the polygon.
+	<b> Input: </b>  An object of DCEL class i.e D, index of the vertex, an object of Status class. <br>
+	<b> Output: </b> none.
+	*/	
 	void handle_start_vertex(cg::DCEL &D,int index,cg::Status &tau){
 		std::pair<cg::Point,cg::Point> edge;
 		const int v_size = D.vertex_record.size();
@@ -39,6 +54,11 @@ namespace cg{
 		tau.insert(edge,index);
 	}
 
+	/**
+	A function to handle an end vertex in the polygon.
+	<b> Input: </b>  An object of DCEL class i.e D, index of the vertex, an object of Status class. <br>
+	<b> Output: </b> none.
+	*/
 	void handle_end_vertex(cg::DCEL &D,int index,cg::Status &tau){
 		std::pair<cg::Point,cg::Point> edge;
 		const int v_size = D.vertex_record.size();
@@ -49,7 +69,12 @@ namespace cg{
 			D.addEdge(index,helper);
 		tau.remove(edge);
 	}
-	
+
+	/**
+	A function to handle a split vertex in the polygon.
+	<b> Input: </b>  An object of DCEL class i.e D, index of the vertex, an object of Status class. <br>
+	<b> Output: </b> none.
+	*/	
 	void handle_split_vertex(cg::DCEL &D,int index,cg::Status &tau){
 		cg::Point v = D.vertex_record[index].point;
 		auto edge = tau.findEdgeToLeft(v);
@@ -64,6 +89,12 @@ namespace cg{
 		tau.insert(edge_i,index);
 		
 	}
+	
+	/**
+	A function to handle a merge vertex in the polygon.
+	<b> Input: </b>  An object of DCEL class i.e D, index of the vertex, an object of Status class. <br>
+	<b> Output: </b> none.
+	*/	
 	void handle_merge_vertex(cg::DCEL &D,int index,cg::Status &tau){
 		handle_end_vertex(D,index,tau);	
 		cg::Point v = D.vertex_record[index].point;
@@ -74,6 +105,12 @@ namespace cg{
 		}
 		tau.setHelper(edge,index);	
 	}
+	
+	/**
+	A function to handle a regular vertex in the polygon.
+	<b> Input: </b>  An object of DCEL class i.e D, index of the vertex, an object of Status class. <br>
+	<b> Output: </b> none.
+	*/	
 	void handle_regular_vertex(cg::DCEL &D,int index,cg::Status &tau){
 		bool interior_right;
 		int v_size = D.vertex_record.size();
@@ -99,6 +136,12 @@ namespace cg{
 		}
 	}
 	
+	/**
+	A function to partition a simple polygon stored in a DCEL(in Anti-clockwise order),
+	into a set of y-monotone polygons, by inserting edges in the DCEL.
+	<b> Input: </b> A DCEL D consisting of a simple polygon. <br>
+	<b> Output: </b> none.
+	*/
 	void make_monotone(cg::DCEL &D){
 		
 		auto cmp = [](const cg::vertex &A,const cg::vertex &B){

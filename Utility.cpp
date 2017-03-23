@@ -72,7 +72,7 @@ namespace cg{
 	
 	/**
 	* Function to find the polar angle of two points in cartesian coordinate system.
-	* <b> Input: </b> 2 points a and b. <br>
+	* <b> Input: </b> 2 points i.e. a and b. <br>
 	* <b> Output: </b> polar angle between a and b in cartesian coordinate system.
 	*/
 	double polarAngle(const Point &a,const Point &b){
@@ -80,16 +80,15 @@ namespace cg{
 	}
 	
 	/**
-	* Function to find the polar angle of two points in cartesian coordinate system.
-	* <b> Input: </b> 2 points a and b. <br>
-	* <b> Output: </b> polar angle between a and b in cartesian coordinate system.
+	* Function to find the interior angle formed by the three points of a simple polygon(in Anti-clockwise order) in cartesian coordinate system.
+	* <b> Input: </b> 3 points i.e a, b and c of a simple polygon in anti-clockwise order. <br>
+	* <b> Output: </b> Interior angle of the polygon, formed by these three points.
 	*/
 	double polarAngle(const Point &a,const Point &b,const Point&c){
 		double theta1 = polarAngle(b,a);
 		double theta2 = polarAngle(c,b);
 		return fmod((180.0 + theta1-theta2+360),360);
 	}
-	
 	
 	/**
 	* Function to find bottommost point(or leftmost such point in case of a tie) in a point set defined in cartesian space.
@@ -123,8 +122,9 @@ namespace cg{
 	/**
 	* Lambda function used for the sort function in andrews algorithm.
 	* <b> Input: </b> Two points a and b belonging to set of points S. <br>
-	* <b> Output: </b><ol><li>True if a's x-coordinate is larger than b or if both are same and a's y-coordinate is larger.</li>
-	* <li>False otherwise.</li>
+	* <b> Output: </b> <ol> <li> True if a's x-coordinate is larger than b or if both are same and a's y-coordinate is larger. </li>
+	* 						<li> False otherwise. </li>
+*					  </ol>
 	*/	 
 	bool compareXY(const Point& a, const Point& b){
 	
