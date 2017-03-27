@@ -8,7 +8,21 @@ Contains defintions of functions in DCEL(Doubly Connected Edge List) class.
 #include <algorithm>
 
 namespace cg{
-	
+	/**
+	A function to find the index of next vertex of a given vertex in a face.
+	<b> Input: </b>	Index of the current vertex and index of the common face.
+	<b> Output: </b> Index of the next vertex in the same face.
+	*/
+	int DCEL::nextVertex(int vid,int fid){
+		int eid = this->findEdge(vid,fid);
+		eid = this->edge_record[eid].nextedge_id;
+		return this->edge_record[eid].origin_id;
+	}
+	/**
+	A function to extract all polygons from DCEL.
+	<b> Input: </b>	None.
+	<b> Output: </b> A 2D vector of indexes of vertices of polygon. Each vectorin 2D vector corresponds to one polygon in DCEL.
+	*/
 	std::vector<std::vector<int> > DCEL::extractAllPolygons(void){
 		std::vector<std::vector<int> > polygon;		// contains all polygons, polygon[i] refers to the ith polygon
 		
