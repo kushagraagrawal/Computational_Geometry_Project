@@ -20,22 +20,13 @@ int main(){
 	cg::make_monotone(D);
 	
 	// Extract all monotone polygons from D
-	std::vector< std::vector<cg::Point> > P_all;		// contains all monotone polygons from D
-	for(int i=1;i<D.face_record.size();i++){
-		std::vector<int> v_id = D.verticesOfFace(i);		// contains ids of all vertices in ith face
-		std::vector<cg::Point> P;
-		for(auto x:v_id){
-			P.push_back(D.vertex_record[x].point);
-		}
-		P_all.push_back(P);
-	}
+	std::vector< std::vector<int> > polygon = D.extractAllPolygons();
 	
-	// Print all monotone polygons
-	for(auto x:P_all){
-		for(auto p:x){
-			std::cout << p << " ";
+	for(auto p:polygon){
+		for(int id:p){
+			cout << D.vertex_record[id].point << " ";
 		}
-		std::cout << "\n";
+		cout << "\n";
 	}
 return 0;
 }

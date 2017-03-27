@@ -8,6 +8,16 @@ Contains defintions of functions in DCEL(Doubly Connected Edge List) class.
 #include <algorithm>
 
 namespace cg{
+	
+	std::vector<std::vector<int> > DCEL::extractAllPolygons(void){
+		std::vector<std::vector<int> > polygon;		// contains all polygons, polygon[i] refers to the ith polygon
+		
+		for(int i=1;i< (this->face_record).size();i++){
+			std::vector<int> vertex_ids = this->verticesOfFace(i);		// contains ids of all vertices in ith face
+			polygon.push_back(vertex_ids);
+		}
+		return polygon;
+	}
 	/**
 	A function to find the common face between two vertices.
 	<b> Input:  </b> Two indexes of the two vertices in the vertex table(vertex_record). <br>

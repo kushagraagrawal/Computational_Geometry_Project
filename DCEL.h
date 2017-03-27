@@ -61,6 +61,7 @@ namespace cg{
 			void addEdge(const int vid1,const int vid2);	//!< A function to add an edge(two half-edges) between two vertices.
 			int findEdge(int vid,int fid);			//!< A function to find the edge on the boundary of a face, originating from a vertex.
 			bool adjacentVertices(const int vid1,const int vid2); //!< A bool function to check if two vertces are adjacent.
+			std::vector<std::vector<int> > extractAllPolygons(void);
 			
 			// Only for debugging purpose
 			void printVertexRecord(void);	//!< A function to print vertex table of the DCEL.
