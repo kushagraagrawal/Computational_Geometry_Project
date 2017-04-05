@@ -79,6 +79,7 @@ namespace cg{
 	* <li>False otherwise.</li></ol>
 	*/
 	bool compareXY(const Point& a, const Point& b);
+	bool compareYX(const Point& a, const Point& b)
 
 }
 

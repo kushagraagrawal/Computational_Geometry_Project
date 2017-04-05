@@ -133,4 +133,11 @@ namespace cg{
 		bool condition3 = (a.y > b.y);
 		return (condition1 or(condition2 and condition3));
 	}
+	bool compareYX(const Point& a, const Point& b){
+		
+		bool condition1 = (a.y > b.y);
+		bool condition2 = (a.y == b.y);
+		bool condition3 = (a.y < b.y);
+		return (condition1 or(condition2 and condition3)); 
+	}
 }
