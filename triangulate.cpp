@@ -42,14 +42,28 @@ namespace cg{
 				/*
 				 * now we have two separate chains. 
 				 * */
-				 std::stack s;
-				 s.push(vertex_record[points[0]);
-				 s.push(vertex_record[points[1]);
+				 std::stack<int> s;
+				 s.push(points[0]);
+				 s.push(points[1]);
+				 DCEL something;
 				 for(int i =2;i<points.size();i++){
 					/*
 					 * now to figure out if they on 2 different chains or same chain
 					 * then perform ops
 					 * */
+					 int temppoint = s.pop();
+					 if(!onSameChain(temppoint,vertex_record[points[i]],left,right)){
+						something.addEdge(temppoint,i);
+						while(s.size()>1){
+							
+							something.addEdge(s.pop(),i);
+						}
+						s.push(points[i-1]);
+						s.push(points[i]);
+					 }
+					 else{
+						
+					 }
 				 }
 		  }
 	
