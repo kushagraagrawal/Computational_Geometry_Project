@@ -99,14 +99,14 @@ namespace cg{
 				 * then perform ops
 				 * */
 				 int temppoint = s.pop();
-				 if(!onSameChain(temppoint,vertex_record[points[i]],left,right)){
+				 if(chain[temppoint]!= chain[i]){
 					D.addEdge(temppoint,i);
 					while(s.size()>1){
 						
 						something.addEdge(s.pop(),i);
 					}
-					s.push(points[i-1]);
-					s.push(points[i]);
+					s.push(finallist[i-1]);
+					s.push(finallist[i]);
 				 }
 				 else{
 					//D.addEdge(temppoint,i);
@@ -135,7 +135,7 @@ namespace cg{
 				else if(i== size_of_stack -1 )
 					break;
 				else
-					something.addEdge(s.pop(),points[points.size() -1]);
+					D.addEdge(s.pop(),points[points.size() -1]);
 					
 			}
 			#endif
