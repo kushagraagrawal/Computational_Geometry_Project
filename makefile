@@ -1,8 +1,8 @@
 CPP = g++
 CFLAGS = -std=c++11
 
-test.o: Point.o DCEL.o Ymonotone.o Utility.o Status.o test.cpp
-	$(CPP) $(CFLAGS) test.cpp Point.o DCEL.o Ymonotone.o Utility.o Status.o -o test.o
+test.o: Point.o DCEL.o Ymonotone.o tria.o Utility.o Status.o test.cpp
+	$(CPP) $(CFLAGS) test.cpp Point.o DCEL.o Ymonotone.o tria.o Utility.o Status.o -o test.o
 
 DCEL.o: DCEL.cpp
 	$(CPP) $(CFLAGS) -c DCEL.cpp -o DCEL.o
@@ -12,6 +12,9 @@ Point.o: Point.h Point.cpp
 
 Ymonotone.o: Ymonotone.cpp Ymonotone.h
 	$(CPP) $(CFLAGS) -c Ymonotone.cpp -o Ymonotone.o
+
+tria.o: triangulate.cpp triangulate.h
+	$(CPP) $(CFLAGS) -c triangulate.cpp -o tria.o
 	
 Utility.o: Utility.cpp Utility.h
 	$(CPP) $(CFLAGS) -c Utility.cpp -o Utility.o

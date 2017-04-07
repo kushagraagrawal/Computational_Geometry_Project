@@ -4,6 +4,7 @@
 #include "Ymonotone.h"
 #include "Utility.h"
 #include "Status.h"
+#include "triangulate.h"
 using namespace std;
 
 int main(){
@@ -28,6 +29,7 @@ int main(){
 		}
 		cout << "\n";
 	}
+	cg::triangulate(D);
 
 	
 return 0;

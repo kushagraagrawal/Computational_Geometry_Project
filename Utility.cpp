@@ -141,6 +141,7 @@ namespace cg{
 		bool condition3 = (a.y < b.y);
 		return (condition1 or(condition2 and condition3)); 
 	}
+	/*
 	bool onSameChain(int point1,int point2,std::vector<int> left, std::vector<int> right){
 		
 		if(std::find(left.begin(),left.end(), point1) && std::find(left.begin(),left.end(), point2))
@@ -150,4 +151,5 @@ namespace cg{
 		return false;
 	
 	}
+	*/
 }
