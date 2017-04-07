@@ -6,46 +6,50 @@
 #include "DCEL.h"
 
 namespace cg{
-	DCEL triangulate(DCEL &p){
+	DCEL triangulate(DCEL &D){
 		
 		 std::vector<std::vector<int> > polygons;
-		  polygons = p.extractAllPolygons();
-		  for(int i=0;i<polygons.size();i++){
+		  polygons = D.extractAllPolygons();
+		  for(int face=1;face<polygons.size();face++){
 				
-				std::vector<int> points = verticesOfFace(i);
-				std::vector<Point> h2;
+				std::vector<int> points = D.verticesOfFace(face);
+				//std::vector<Point> h2;
 				
-				for(int i= 0;i<h2.size();i++)
-					h2.push_back(vertex_record[points[i]]);
+				//for(int i= 0;i<h2.size();i++)
+					//h2.push_back(D.vertex_record[points[i]]);
 				
-				std::sort(h2.begin(),h2.end(),compareYX);
 				
-				std::vector<Point> right,left;
-				left.push_back(h2[0]);
-				right.push_back(h2[0]);
-				int j;
-				for (int i=1;i<h2.size();i++){
-					if(h2[i].y <= h2[i-1].y && h2[i].y <= h2[i+1].y){
-						j = i;
-						break;
+				std::vector<int> right,left;
+				int top_id=points[0], bottom_id=points[0];
+				for (int i=1;i<points.size();i++){
+					if(below(D.vertex_record[top_id].point,D.vertex_record[i].point){
+						top_id = i;
 					}
-					else{
-						right.push_back(h2[i]);					
+					if(below(D.vertex_record[i].point,D.vertex_record[bottom_id].point){
+						bottom_id = i;
 					}
 				}
-				left.push_back(h2[j]);
-				right.push_back(h2[j]);
 				
-				for(int i = j+1;i<h2.size();i++)
-					left.push_back(h2[i]);
-					
+				
+				left.push_back(top_id);
+				while(left.back()!=bottom_id){
+					int id = nextVertex(left.back(),face);
+					left.push_back(id);
+				}
+				
+				// similarly for right. start from bottom and to the top	
+				// reverse right.
+				
+				// merge subroutine. comparing left and right vectors on y-coordinate. use below() function.
+				// obtain final list
 				/*
 				 * now we have two separate chains. 
 				 * */
+				 
 				 std::stack<int> s;
 				 s.push(points[0]);
 				 s.push(points[1]);
-				 DCEL something;
+				 
 				 for(int i =2;i<points.size();i++){
 					/*
 					 * now to figure out if they on 2 different chains or same chain
@@ -53,7 +57,7 @@ namespace cg{
 					 * */
 					 int temppoint = s.pop();
 					 if(!onSameChain(temppoint,vertex_record[points[i]],left,right)){
-						something.addEdge(temppoint,i);
+						D.addEdge(temppoint,i);
 						while(s.size()>1){
 							
 							something.addEdge(s.pop(),i);
@@ -62,9 +66,35 @@ namespace cg{
 						s.push(points[i]);
 					 }
 					 else{
-						
+						//D.addEdge(temppoint,i);
+						while(1){
+							temppoint = s.pop();
+							
+							
+							
+							else
+							break;
+						//keep popping
+						//s.push(last vertex popped from s
+						//s.push(i);
 					 }
+						s.push(temppoint);
+						s.push(i);
+					}
 				 }
+				//add diagonals to all stack vertices except first and last one to un.
+				int i=0,size_of_stack = s.size();
+				while(!s.empty()){
+					if(i==0){
+						i++;
+						continue;
+					}
+					else if(i== size_of_stack -1 )
+						break;
+					else
+						something.addEdge(s.pop(),points[points.size() -1]);
+						
+				}
 		  }
 	
 	}
