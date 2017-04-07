@@ -59,23 +59,52 @@ namespace cg{
 			
 			std::cout << "\n------------------\n";
 			
-			#if 0
 			
+			// merge subroutine. comparing left and right vectors on y-coordinate. use below() function.
+			// obtain final list
+			/*
+			 * now we have two separate chains. 
+			 * */
+			 vector<int> finallist;
+				int left_tra=0,right_tra = 0;
+				while (left_tra!=left.size() and right_tra!=right.size()){
+					if(D.vertex_record[left[left_tra]].point.y <= D.vertex_record[right[right_tra]].point.y){
+							finallist.push_back(left[left_tra]);
+							left_tra++;
+					}
+					else{
+						finallist.push_back(right[right_tra]);
+						right_tra++;
+					}
+				}
+				
+				while(left_tra!=left.size()){
+					finallist.push_back(left[left_tra]);
+					left_tra++;
+				}
+				while(right_tra!=right.size()){
+					finallist.push_back(right[right_tra]);
+					right_tra++;
+				}
 			 
-			 for(int i =2;i<points.size();i++){
+			 std::stack<int> s;
+			 s.push(finallist[0]);
+			 s.push(finallist[1]);
+			 
+			 for(int i =2;i<finallist.size();i++){
 				/*
 				 * now to figure out if they on 2 different chains or same chain
 				 * then perform ops
 				 * */
 				 int temppoint = s.pop();
-				 if(!onSameChain(temppoint,vertex_record[points[i]],left,right)){
+				 if(chain[temppoint]!= chain[i]){
 					D.addEdge(temppoint,i);
 					while(s.size()>1){
 						
 						something.addEdge(s.pop(),i);
 					}
-					s.push(points[i-1]);
-					s.push(points[i]);
+					s.push(finallist[i-1]);
+					s.push(finallist[i]);
 				 }
 				 else{
 					//D.addEdge(temppoint,i);
@@ -104,7 +133,7 @@ namespace cg{
 				else if(i== size_of_stack -1 )
 					break;
 				else
-					something.addEdge(s.pop(),points[points.size() -1]);
+					D.addEdge(s.pop(),points[points.size() -1]);
 					
 			}
 			#endif
