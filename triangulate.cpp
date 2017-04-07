@@ -37,7 +37,6 @@ namespace cg{
 			left.push_back(top_id);
 			while(left.back()!=bottom_id){
 				int id = D.nextVertex(left.back(),face);
-				if(id!=bottom_id)
 				chain[id]=LEFT;
 				left.push_back(id);
 			}
@@ -59,19 +58,9 @@ namespace cg{
 			
 			
 			std::cout << "\n------------------\n";
-			#if 0
-			// similarly for right. start from bottom and to the top	
-			// reverse right.
 			
-			// merge subroutine. comparing left and right vectors on y-coordinate. use below() function.
-			// obtain final list
-			/*
-			 * now we have two separate chains. 
-			 * */
-			 
-			 std::stack<int> s;
-			 s.push(points[0]);
-			 s.push(points[1]);
+			#if 0
+			
 			 
 			 for(int i =2;i<points.size();i++){
 				/*

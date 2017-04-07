@@ -29,6 +29,7 @@ int main(){
 		}
 		cout << "\n";
 	}
+	cout << "\n---------Triangulating--------\n";
 	cg::triangulate(D);
 
 	
