@@ -57,41 +57,50 @@ namespace cg{
 			for(auto x:chain) std::cout << x <<" ";
 			
 			
-			std::cout << "\n------------------\n";
-			
-			
 			// merge subroutine. comparing left and right vectors on y-coordinate. use below() function.
 			// obtain final list
 			/*
 			 * now we have two separate chains. 
 			 * */
-			 vector<int> finallist;
-				int left_tra=0,right_tra = 0;
-				while (left_tra!=left.size() and right_tra!=right.size()){
-					if(D.vertex_record[left[left_tra]].point.y <= D.vertex_record[right[right_tra]].point.y){
-							finallist.push_back(left[left_tra]);
-							left_tra++;
-					}
-					else{
-						finallist.push_back(right[right_tra]);
-						right_tra++;
-					}
-				}
-				
-				while(left_tra!=left.size()){
-					finallist.push_back(left[left_tra]);
-					left_tra++;
-				}
-				while(right_tra!=right.size()){
-					finallist.push_back(right[right_tra]);
-					right_tra++;
-				}
 			 
-			 std::stack<int> s;
-			 s.push(finallist[0]);
-			 s.push(finallist[1]);
+			std::vector<int> finallist;
+			int L=1,R=1;		// indexes in left and right chains respectively.
+			finallist.push_back(left[0]);
+			while (L!=left.size() and R!=right.size()){
+				cg::Point L_point = D.vertex_record[left[L]].point;
+				cg::Point R_point = D.vertex_record[right[R]].point;
+				if(below(R_point,L_point)){
+						finallist.push_back(left[L]);
+						L++;
+				}
+				else{
+					finallist.push_back(right[R]);
+					R++;
+				}
+			}
+			
+			while(L!=left.size()){
+				finallist.push_back(left[L]);
+				L++;
+			}
+			while(R!=right.size()){
+				finallist.push_back(right[R]);
+				R++;
+			}
+			finallist.pop_back();
+			std::cout << "\nMerged\n";
+			for(auto x:finallist) std::cout << x <<" ";
+			
+			std::cout << "\n------------------\n";
+			
+//			DONT MAKE CHANGES ABOVE THIS LINE :D 		----------------------------------------	
+
+			#if 0
+		 	std::stack<int> s;
+			s.push(finallist[0]);
+			s.push(finallist[1]);
 			 
-			 for(int i =2;i<finallist.size();i++){
+			for(int i =2;i<finallist.size();i++){
 				/*
 				 * now to figure out if they on 2 different chains or same chain
 				 * then perform ops
