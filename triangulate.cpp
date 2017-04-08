@@ -118,7 +118,16 @@ namespace cg{
 					while(!stck.empty()){
 						int top1 = stck.top();
 						stck.pop();
+						if(stck.empty()){
+							stck.push(top1);
+							stck.push(finallist[i]);
+							std::cout << "Pushed " << top1 << " & " << finallist[i] <<"\n";
+							break;
+						}
 						int top2 = stck.top();
+						
+						std::cout << "Popped " << top1 << " top2 = " << top2 <<"\n"; 
+						
 						cg::Point curr_point = D.vertex_record[finallist[i]].point;
 						cg::Point top1_point = D.vertex_record[top1].point;
 						cg::Point top2_point = D.vertex_record[top2].point;
@@ -131,10 +140,12 @@ namespace cg{
 						else{
 							stck.push(top1);
 							stck.push(finallist[i]);
+							std::cout << "Pushed " << top1 << " & " << finallist[i] <<"\n";
 							break;
 						}
 					}
 				}
+				std::cout << "Finished i=" << i << "\n------------------------------------\n";
 			}
 			stck.pop();
 			while(stck.size()>1){
