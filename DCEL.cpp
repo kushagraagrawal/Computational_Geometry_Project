@@ -216,7 +216,7 @@ namespace cg{
 		int fid = this->commonFace(vid1,vid2);
 		int eid1 = this->findEdge(vid1,fid);
 		int eid2 = this->findEdge(vid2,fid);		
-		std::cout << "fid="<<fid <<" " << "eid1=" << eid1 << " " << "eid2=" << eid2 << "\n";
+		std::cout << "Added edge b/w " << vid1 << " & " << vid2 << "\n";
 		
 		cg::face new_face;
 		new_face.edge_id = eid1;

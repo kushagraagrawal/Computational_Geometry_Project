@@ -65,7 +65,6 @@ namespace cg{
 		edge.first  = D.vertex_record[(index-1+v_size)%v_size].point;
 		edge.second = D.vertex_record[index].point;
 		int helper = tau.getHelper(edge);
-		std::cout << "helper("<< index << ") = " << helper << "\n";
 		if(vertex_type[helper] == MERGE_VERTEX)
 			D.addEdge(index,helper);
 		tau.remove(edge);
@@ -88,7 +87,6 @@ namespace cg{
 		int v_size = D.vertex_record.size();
 		edge_i.second = D.vertex_record[(index+1)%v_size].point;
 		tau.insert(edge_i,index);
-		
 	}
 	
 	/**
@@ -100,7 +98,6 @@ namespace cg{
 		handle_end_vertex(D,index,tau,vertex_type);	
 		cg::Point v = D.vertex_record[index].point;
 		auto edge_left = tau.findEdgeToLeft(v);
-		std:: cout << edge_left.first << " " << edge_left.second << "\n";
 		int helper = tau.getHelper(edge_left);
 		if(vertex_type[helper] == MERGE_VERTEX){
 			D.addEdge(index,helper);
@@ -123,7 +120,6 @@ namespace cg{
 			interior_right = true;
 		else
 			interior_right = false;
-		std::cout << "interior is " << ((interior_right)? "in" : "not in") << " right\n";
 		if(interior_right){
 			handle_end_vertex(D,index,tau,vertex_type);
 			handle_start_vertex(D,index,tau,vertex_type);			
@@ -132,7 +128,6 @@ namespace cg{
 			cg::Point v = D.vertex_record[index].point;
 			auto edge = tau.findEdgeToLeft(v);
 			int helper = tau.getHelper(edge);
-			std::cout << "helper("<< index << ") = " << helper << "\n";
 			if(vertex_type[helper] == MERGE_VERTEX){
 				D.addEdge(index,helper);
 			}
@@ -158,7 +153,6 @@ namespace cg{
 		int vertex_type[(D.vertex_record).size()];
 		for(int i=0;i<(D.vertex_record).size();i++){
 			vertex_type[i] = typeOfVertex(D,i);		// type of vertex with ith index, in D's vertex_record
-			std::cout << D.vertex_record[i].point << " " << vertex_type[i] <<"\n";
 			Q.push(D.vertex_record[i]);
 		}
 		std::cout << "Vertices successfully pushed into Q\n";
@@ -167,7 +161,6 @@ namespace cg{
 			cg::vertex v = Q.top();
 			Q.pop();
 			int index = v.edge_id;		// edge_id is same as vertex_id
-			std::cout << "---------------------\nHandling " << index << "\n";
 			switch(vertex_type[index]){
 				case START_VERTEX:	handle_start_vertex(D,index,tau,vertex_type);
 									break;
@@ -181,9 +174,6 @@ namespace cg{
 									break;
 			}
 		}
-		D.printVertexRecord();
-		D.printEdgeRecord();
-		D.printFaceRecord();
 	}
 
 }
