@@ -1,6 +1,6 @@
 #include "triangulate.h"
-#define LEFT 1
-#define RIGHT 2
+#define LEFT -1
+#define RIGHT 1
 namespace cg{
 	void triangulate(DCEL &D){
 		
@@ -31,7 +31,7 @@ namespace cg{
 			}
 			std::cout << "\nTop:"<< top_id << "\t Bottom:" << bottom_id <<"\n";
 
-			int chain[D.vertex_record.size()];		// 1 for left, 2 for right
+			int chain[D.vertex_record.size()];		// -1 for left, 1 for right
 			std::fill(chain,chain+D.vertex_record.size(),0);
 			
 			left.push_back(top_id);
@@ -95,57 +95,53 @@ namespace cg{
 			
 //			DONT MAKE CHANGES ABOVE THIS LINE :D 		----------------------------------------	
 
-			#if 0
-		 	std::stack<int> s;
-			s.push(finallist[0]);
-			s.push(finallist[1]);
+		 	std::stack<int> stck;
+			stck.push(finallist[0]);
+			stck.push(finallist[1]);
 			 
-			for(int i =2;i<finallist.size();i++){
-				/*
-				 * now to figure out if they on 2 different chains or same chain
-				 * then perform ops
-				 * */
-				 int temppoint = s.pop();
-				 if(chain[temppoint]!= chain[i]){
-					D.addEdge(temppoint,i);
-					while(s.size()>1){
-						
-						something.addEdge(s.pop(),i);
+			for(int i=2;i<finallist.size()-1;i++){
+				std::cout << "i=" << i << "\n";
+				//if they on 2 different chains			 
+				if(chain[stck.top()]!= chain[finallist[i]]){
+					std::cout << stck.top() <<" and " << finallist[i] << " lie on diff chain\n";
+					while(!stck.empty()){
+						if(stck.size()>1)
+							D.addEdge(stck.top(),finallist[i]);
+						stck.pop();
 					}
-					s.push(finallist[i-1]);
-					s.push(finallist[i]);
-				 }
-				 else{
-					//D.addEdge(temppoint,i);
-					while(1){
-						temppoint = s.pop();
-						
-						
-						
-						else
-						break;
-					//keep popping
-					//s.push(last vertex popped from s
-					//s.push(i);
-				 }
-					s.push(temppoint);
-					s.push(i);
+					stck.push(finallist[i-1]);
+					stck.push(finallist[i]);
 				}
-			 }
-			//add diagonals to all stack vertices except first and last one to un.
-			int i=0,size_of_stack = s.size();
-			while(!s.empty()){
-				if(i==0){
-					i++;
-					continue;
+				// if they are on same chain
+				else{
+					std::cout << stck.top() <<" and " << finallist[i] << " lie on same chain\n";
+					while(!stck.empty()){
+						int top1 = stck.top();
+						stck.pop();
+						int top2 = stck.top();
+						cg::Point curr_point = D.vertex_record[finallist[i]].point;
+						cg::Point top1_point = D.vertex_record[top1].point;
+						cg::Point top2_point = D.vertex_record[top2].point;
+						if(finallist[i]==4){
+						 	std::cout << turn_direction(curr_point,top1_point,top2_point) << "\t=\t" << chain[finallist[i]] << "\n";
+						}
+						if(turn_direction(curr_point,top1_point,top2_point)==chain[finallist[i]]){
+							D.addEdge(finallist[i],top2);
+						}
+						else{
+							stck.push(top1);
+							stck.push(finallist[i]);
+							break;
+						}
+					}
 				}
-				else if(i== size_of_stack -1 )
-					break;
-				else
-					D.addEdge(s.pop(),points[points.size() -1]);
-					
 			}
-			#endif
+			stck.pop();
+			while(stck.size()>1){
+				D.addEdge(finallist.back(),stck.top());
+				stck.pop();
+			}
+			
 		}
 	
 	}
