@@ -2,7 +2,7 @@
 #define LEFT -1
 #define RIGHT 1
 namespace cg{
-	void triangulate(DCEL &D){
+	void triangulate(cg::DCEL &D){
 		
 		int size_face_rec = D.face_record.size();
 	  	for(int face=1;face < size_face_rec;face++){
