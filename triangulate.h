@@ -1,8 +1,10 @@
 #ifndef TRIANGULATE_H_INCLUDED
 #define TRIANGULATE_H_INCLUDED
 
-#include<iostream>
-#include<vector>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <stack>
 #include "Point.h"
 #include "DCEL.h"
 #include "Ymonotone.h"
