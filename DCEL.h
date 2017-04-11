@@ -63,6 +63,7 @@ namespace cg{
 			bool adjacentVertices(const int vid1,const int vid2); //!< A bool function to check if two vertces are adjacent.
 			std::vector<std::vector<int> > extractAllPolygons(void); //!< A function to extract all polygons from DCEL.
 			int nextVertex(int vid,int face_id);			//!< A function to find the index of next vertex of a given vertex in a face.
+			void addInnerVertex(const cg::Point& inner,const int vid,const int fid);		//!< A function to connect an inner point of a face to a vertex on the boundary.
 			
 			// Only for debugging purpose
 			void printVertexRecord(void);	//!< A function to print vertex table of the DCEL.

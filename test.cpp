@@ -44,10 +44,14 @@ int main(int argc, char* argv[]) {
 	std::vector<cg::Point> P;
 	cg::readPointSet(argv[1],P);
 	cg::DCEL D(P);
-	cg::make_monotone(D);
+	cg::Point pt(5,3);
+	D.addInnerVertex(pt,7,1);
+	cg::writeEdges(D, argv[2]);	
+/*	cg::make_monotone(D);
 	cg::writeEdges(D, argv[2]);
 	cg::triangulate(D);
 	cg::writeEdges(D, argv[3]);
+*/
 	return 0;
 }
 

@@ -134,6 +134,14 @@ namespace cg{
 		bool condition3 = (a.y > b.y);
 		return (condition1 or(condition2 and condition3));
 	}
+	
+	/**
+	* Lambda function used for the sort function on y coordinate(larger first), followed by x coordinate in case of a tie.
+	* <b> Input: </b> Two points a and b belonging to set of points S. <br>
+	* <b> Output: </b> <ol> <li> True if a's x-coordinate is larger than b or if both are same and a's y-coordinate is larger. </li>
+	* 						<li> False otherwise. </li>
+*					  </ol>
+	*/
 	bool compareYX(const Point& a, const Point& b){
 		
 		bool condition1 = (a.y > b.y);
@@ -141,15 +149,4 @@ namespace cg{
 		bool condition3 = (a.y < b.y);
 		return (condition1 or(condition2 and condition3)); 
 	}
-	/*
-	bool onSameChain(int point1,int point2,std::vector<int> left, std::vector<int> right){
-		
-		if(std::find(left.begin(),left.end(), point1) && std::find(left.begin(),left.end(), point2))
-			return true;
-		else if(std::find(right.begin(),right.end(), point1) && std::find(right.begin(),right.end(), point2))
-			return true;
-		return false;
-	
-	}
-	*/
 }

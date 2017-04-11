@@ -8,6 +8,36 @@ Contains defintions of functions in DCEL(Doubly Connected Edge List) class.
 #include <algorithm>
 
 namespace cg{
+	void DCEL::addInnerVertex(const cg::Point& inner,const int vid,const int fid){
+			int n_vertices = this->vertex_record.size();
+			int n_edges = this->edge_record.size();
+
+			cg::vertex newVertex;
+			cg::edge Edge1,Edge2;
+			
+			int v_nextEdge = findEdge(vid,fid);			// next edge of vid in inner face
+			int v_prevEdge = this->edge_record[v_nextEdge].prevedge_id;
+				
+			
+			Edge1.origin_id = vid;
+			Edge1.face_id   = fid;
+			Edge1.nextedge_id = Edge1.twinedge_id = n_edges+1;
+			Edge1.prevedge_id = v_prevEdge;
+			
+			Edge2.origin_id = n_vertices;
+			Edge2.face_id = fid;
+			Edge2.nextedge_id = v_nextEdge;
+			Edge2.prevedge_id = Edge2.twinedge_id = n_edges;
+			
+			
+			newVertex.point = inner;
+			newVertex.edge_id = n_edges+1;
+			
+			this->vertex_record.push_back(std::move(newVertex));
+			this->edge_record.push_back(std::move(Edge1));
+			this->edge_record.push_back(std::move(Edge2));			
+	}
+
 	/**
 	A function to find the index of next vertex of a given vertex in a face.
 	<b> Input: </b>	Index of the current vertex and index of the common face.

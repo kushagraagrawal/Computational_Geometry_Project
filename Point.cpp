@@ -44,7 +44,8 @@ namespace cg{
 	/**
 	* function to output coordinates of Point p
 	*/
-	std::ostream& operator<<(std::ostream& out, const Point& p){		return out << "(" << p.x << "," << p.y << ")";
+	std::ostream& operator<<(std::ostream& out, const Point& p){
+		return out << "(" << p.x << "," << p.y << ")";
 	}
 	/**
 	* function to collect coordinates from user or a file and store of a point P

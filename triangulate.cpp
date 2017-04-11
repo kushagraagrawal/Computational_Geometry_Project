@@ -1,13 +1,22 @@
+/** \file
+Contains implementation of triangulation function.
+*/
+
 #include "triangulate.h"
-#define LEFT -1
-#define RIGHT 1
+
 namespace cg{
+	/**
+	A function to triangulate all the y-monotone polygons stored in a DCEL. <br>
+	All partitions stored in the DCEL should be y-monotone, for correct output.<br>
+	<b> Input: </b> A DCEL object D. <br>
+	<b> Output: </b> returns nothing, triangulates all partitions stored in D, by adding edges to it.
+	*/
 	void triangulate(cg::DCEL &D){
 		
 		int size_face_rec = D.face_record.size();
 	  	for(int face=1;face < size_face_rec;face++){
 	  	
-			std::cout << "Face " << face << "\n";
+//			std::cout << "Face " << face << "\n";
 			
 			std::vector<int> points = D.verticesOfFace(face);
 			
@@ -17,23 +26,25 @@ namespace cg{
 			std::vector<int> right,left;
 			int top_id=points[0], bottom_id=points[0];
 			
-			std::cout << "\nAt begin Top:"<< top_id << "\t Bottom:" << bottom_id <<"\n";
+//			std::cout << "\nAt begin Top:"<< top_id << "\t Bottom:" << bottom_id <<"\n";
 			
 			for (int i=1;i<points.size();i++){
 				if(below(D.vertex_record[top_id].point,D.vertex_record[points[i]].point)){
-					std::cout << "Top changed to " << points[i] << "\n";
+//					std::cout << "Top changed to " << points[i] << "\n";
 					top_id = points[i];
 				}
 				if(below(D.vertex_record[points[i]].point,D.vertex_record[bottom_id].point)){
-					std::cout << "Bottom changed to " << points[i] << "\n";
+//					std::cout << "Bottom changed to " << points[i] << "\n";
 					bottom_id = points[i];
 				}
 			}
-			std::cout << "\nTop:"<< top_id << "\t Bottom:" << bottom_id <<"\n";
+//			std::cout << "\nTop:"<< top_id << "\t Bottom:" << bottom_id <<"\n";
 
-			int chain[D.vertex_record.size()];		// -1 for left, 1 for right
+			// chain[i] stores whether ith vertex in D lies in the right chain or left chain. chain[i] = -1 for left, 1 for right
+			int chain[D.vertex_record.size()];
 			std::fill(chain,chain+D.vertex_record.size(),0);
-			
+
+			// Set chain of all vertices in Left chain to LEFT			
 			left.push_back(top_id);
 			while(left.back()!=bottom_id){
 				int id = D.nextVertex(left.back(),face);
@@ -41,6 +52,7 @@ namespace cg{
 				left.push_back(id);
 			}
 			
+			// Set chain of all vertices in right chain to RIGHT			
 			right.push_back(bottom_id);
 			while(right.back()!=top_id){
 				int id = D.nextVertex(right.back(),face);
@@ -48,21 +60,16 @@ namespace cg{
 				right.push_back(id);
 			}
 			std::reverse(right.begin(),right.end());
-			
+/*			
 			std::cout << "Left\t";
 			for(auto x:left) std::cout << x <<" ";
 			std::cout << "\nRight\t";
 			for(auto x:right) std::cout << x <<" ";
 			std::cout << "\nChain: ";
 			for(auto x:chain) std::cout << x <<" ";
+*/			
 			
-			
-			// merge subroutine. comparing left and right vectors on y-coordinate. use below() function.
-			// obtain final list
-			/*
-			 * now we have two separate chains. 
-			 * */
-			 
+			// Merge left and right chains into finallist, with y coordinate as priority.
 			std::vector<int> finallist;
 			int L=1,R=1;		// indexes in left and right chains respectively.
 			finallist.push_back(left[0]);
@@ -88,13 +95,11 @@ namespace cg{
 				R++;
 			}
 			finallist.pop_back();
-			std::cout << "\nMerged\n";
-			for(auto x:finallist) std::cout << x <<" ";
 			
-			std::cout << "\n------------------\n";
+//			std::cout << "\nMerged\n";
+//			for(auto x:finallist) std::cout << x <<" ";
 			
-//			DONT MAKE CHANGES ABOVE THIS LINE :D 		----------------------------------------	
-
+			// Add edges in DCEL when needed, to triangulate.
 		 	std::stack<int> stck;
 			stck.push(finallist[0]);
 			stck.push(finallist[1]);
@@ -147,6 +152,7 @@ namespace cg{
 				}
 				std::cout << "Finished i=" << i << "\n------------------------------------\n";
 			}
+			
 			stck.pop();
 			while(stck.size()>1){
 				D.addEdge(finallist.back(),stck.top());
@@ -156,4 +162,5 @@ namespace cg{
 		}
 	
 	}
+	
 }

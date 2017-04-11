@@ -13,7 +13,6 @@ Contains declaration of common utility fucntions.
 
 
 namespace cg{
-	//static const double PI = 3.1415926535;
 	
 	/**
 	* Function to read a set of points from file and store it in a vector.
@@ -79,9 +78,14 @@ namespace cg{
 	* <li>False otherwise.</li></ol>
 	*/
 	bool compareXY(const Point& a, const Point& b);
+		/**
+	* Lambda function used for the sort function on y coordinate(larger first), followed by x coordinate in case of a tie.
+	* <b> Input: </b> Two points a and b belonging to set of points S. <br>
+	* <b> Output: </b> <ol> <li> True if a's x-coordinate is larger than b or if both are same and a's y-coordinate is larger. </li>
+	* 						<li> False otherwise. </li>
+*					  </ol>
+	*/
 	bool compareYX(const Point& a, const Point& b);
-	bool onSameChain(int point1,int point2,std::vector<int> left, std::vector<int> right);
-
 }
 
 #endif

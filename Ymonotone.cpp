@@ -22,6 +22,12 @@ namespace cg{
 		return ((A.y < B.y) or ( (A.y==B.y and A.x > B.x)));
 	}
 
+	/**
+	A function to find the type of the vertex of the simple polygon(i.e start vertex/end vertex/split vertex/merge vertex/regular vertex).
+	<b> Input:  </b>	DCEL D which stores the polygon, index of the vertex in vertex_record of DCEL. <br>
+	<b> Output: </b>	The type of vertex i.e start vertex/end vertex/split vertex/merge vertex/regular vertex,
+						denoted by 0,1,2,3 and 4 respectively.
+	*/
 
 	int typeOfVertex(const cg::DCEL &D,int index){
 		int v_size = D.vertex_record.size();
