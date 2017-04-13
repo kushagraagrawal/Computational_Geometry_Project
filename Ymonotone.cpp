@@ -59,9 +59,7 @@ namespace cg{
 		edge.second = D.vertex_record[(index+1)%v_size].point;
 		tau.insert(edge,index);
 		tau.print();
-		tau.insert(edge,index);
-		tau.print();
-		std::cout <<index << " Helper of "<< edge.first <<" "<<edge.second<< " set to " << tau.getHelper(edge) <<"\n";
+		std::cout << " Helper of "<< edge.first <<" "<<edge.second<< " set to " << tau.getHelper(edge) <<" (should be " << index <<")\n";
 	}
 
 	/**
