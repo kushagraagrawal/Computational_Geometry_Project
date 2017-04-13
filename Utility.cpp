@@ -5,7 +5,40 @@ Contains the function definitions of common utility functions.
 #include "Utility.h"
 #include<iomanip>
 #include<vector>
+
 namespace cg{
+	/**
+	Function to write all edges of DCEL to output file
+	<b> Input: </b> DCEL D which stores the the planar subdivision, file name to which edges of DCEL are to be written. <br>
+	<b> Output: </b> returns nothing, writes the edges of the DCEL to output file in the format "x1 y1 x2 y2", where (x1,y1) and (x2,y2) 		are the end points of an edge.
+	*/
+	void writeEdges(cg::DCEL D,char *output_filename){
+		int n_edges = D.edge_record.size();
+		bool valid[n_edges];
+		std::fill(valid,valid+n_edges,true);
+		
+		std::ofstream file(output_filename);
+
+		if(!file.is_open()){
+			std::cerr << "Output File not found\n";
+			exit(1);
+		}
+		else{
+//			std::cout << "Writing DCEL to " << output_filename << "\n";
+		}
+		for(int i=0;i<n_edges;i++){
+			if(valid[i]){
+				int p1_id = D.edge_record[i].origin_id;
+				int twin_id = D.edge_record[i].twinedge_id;
+				int p2_id = D.edge_record[twin_id].origin_id;
+				cg::Point p1 = D.vertex_record[p1_id].point;
+				cg::Point p2 = D.vertex_record[p2_id].point;				
+				file << p1.x << " " << p1.y << " " << p2.x << " " << p2.y << "\n";
+				valid[twin_id]=false;
+			}
+		}
+	}
+	
 	
 	/**
 	* Function to read a set of points from file and store it in a vector.

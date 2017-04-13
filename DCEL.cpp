@@ -15,7 +15,7 @@ namespace cg{
 			cg::vertex newVertex;
 			cg::edge Edge1,Edge2;
 			
-			int v_nextEdge = findEdge(vid,fid);			// next edge of vid in inner face
+			int v_nextEdge = findEdge(vid,fid);	// next edge of vid in inner face
 			int v_prevEdge = this->edge_record[v_nextEdge].prevedge_id;
 				
 			
@@ -75,11 +75,13 @@ namespace cg{
 		std::fill(visited,visited+f_size,false);
 		
 		std::vector<int> edges_ID1 = edgesOfVertex(vid1);
+		
 		for(auto x:edges_ID1){
 			visited[edge_record[x].face_id]=true;
 		}
 		
 		std::vector<int> edges_ID2 = edgesOfVertex(vid2);
+		
 		std::vector<int> common;
 		for(auto x:edges_ID2){
 			if(edge_record[x].face_id!=0 && visited[edge_record[x].face_id])		// exclude outer face i.e f[0]
@@ -186,7 +188,8 @@ namespace cg{
 		
 		cg::face f1;
 		f1.edge_id = 0;
-		face_record.push_back(std::move(f1));		
+		face_record.push_back(std::move(f1));
+		std::cout << "DCEL constructed\n";
 	}
 	
 	/**
@@ -217,7 +220,8 @@ namespace cg{
 	<b> Output: </b> A vector of indexes of all edges originating from the vertex.
 	*/
 	std::vector<int> DCEL::edgesOfVertex(int vid){
-		if(vid >= vertex_record.size()){
+		if(vid >= this->vertex_record.size()){
+			std:: cout << vid << ">" << vertex_record.size() <<"\n";
 			std::cerr<< "Vertex index " << vid << " out of bounds\n";
 			exit(1);
 		}

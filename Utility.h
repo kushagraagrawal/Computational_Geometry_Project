@@ -9,11 +9,16 @@ Contains declaration of common utility fucntions.
 #include <vector>
 #include <cmath>
 #include "Point.h"
-
+#include "DCEL.h"
 
 
 namespace cg{
-	
+	/**
+	Function to write all edges of DCEL to output file
+	<b> Input: </b> DCEL D which stores the the planar subdivision, file name to which edges of DCEL are to be written. <br>
+	<b> Output: </b> returns nothing, writes the edges of the DCEL to output file in the format "x1 y1 x2 y2", where (x1,y1) and (x2,y2) 		are the end points of an edge.
+	*/
+	void writeEdges(cg::DCEL D,char *output_filename);
 	/**
 	* Function to read a set of points from file and store it in a vector.
 	* <b> Input: </b> File name and set of points. <br>

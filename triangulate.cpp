@@ -20,8 +20,8 @@ namespace cg{
 			
 			std::vector<int> points = D.verticesOfFace(face);
 			
-			for(auto x:points) std::cout << x <<" ";
-			std::cout << "\n";
+//			for(auto x:points) std::cout << x <<" ";
+//			std::cout << "\n";
 			
 			std::vector<int> right,left;
 			int top_id=points[0], bottom_id=points[0];
@@ -105,10 +105,10 @@ namespace cg{
 			stck.push(finallist[1]);
 			 
 			for(int i=2;i<finallist.size()-1;i++){
-				std::cout << "i=" << i << "\n";
+//				std::cout << "i=" << i << "\n";
 				//if they on 2 different chains			 
 				if(chain[stck.top()]!= chain[finallist[i]]){
-					std::cout << stck.top() <<" and " << finallist[i] << " lie on diff chain\n";
+//					std::cout << stck.top() <<" and " << finallist[i] << " lie on diff chain\n";
 					while(!stck.empty()){
 						if(stck.size()>1)
 							D.addEdge(stck.top(),finallist[i]);
@@ -119,25 +119,25 @@ namespace cg{
 				}
 				// if they are on same chain
 				else{
-					std::cout << stck.top() <<" and " << finallist[i] << " lie on same chain\n";
+//					std::cout << stck.top() <<" and " << finallist[i] << " lie on same chain\n";
 					while(!stck.empty()){
 						int top1 = stck.top();
 						stck.pop();
 						if(stck.empty()){
 							stck.push(top1);
 							stck.push(finallist[i]);
-							std::cout << "Pushed " << top1 << " & " << finallist[i] <<"\n";
+//							std::cout << "Pushed " << top1 << " & " << finallist[i] <<"\n";
 							break;
 						}
 						int top2 = stck.top();
 						
-						std::cout << "Popped " << top1 << " top2 = " << top2 <<"\n"; 
+//						std::cout << "Popped " << top1 << " top2 = " << top2 <<"\n"; 
 						
 						cg::Point curr_point = D.vertex_record[finallist[i]].point;
 						cg::Point top1_point = D.vertex_record[top1].point;
 						cg::Point top2_point = D.vertex_record[top2].point;
 						if(finallist[i]==4){
-						 	std::cout << turn_direction(curr_point,top1_point,top2_point) << "\t=\t" << chain[finallist[i]] << "\n";
+//						 	std::cout << turn_direction(curr_point,top1_point,top2_point) << "\t=\t" << chain[finallist[i]] << "\n";
 						}
 						if(turn_direction(curr_point,top1_point,top2_point)==chain[finallist[i]]){
 							D.addEdge(finallist[i],top2);
@@ -145,12 +145,12 @@ namespace cg{
 						else{
 							stck.push(top1);
 							stck.push(finallist[i]);
-							std::cout << "Pushed " << top1 << " & " << finallist[i] <<"\n";
+//							std::cout << "Pushed " << top1 << " & " << finallist[i] <<"\n";
 							break;
 						}
 					}
 				}
-				std::cout << "Finished i=" << i << "\n------------------------------------\n";
+//				std::cout << "Finished i=" << i << "\n------------------------------------\n";
 			}
 			
 			stck.pop();

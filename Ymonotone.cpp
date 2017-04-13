@@ -58,6 +58,10 @@ namespace cg{
 		edge.first  = D.vertex_record[index].point;
 		edge.second = D.vertex_record[(index+1)%v_size].point;
 		tau.insert(edge,index);
+		tau.print();
+		tau.insert(edge,index);
+		tau.print();
+		std::cout <<index << " Helper of "<< edge.first <<" "<<edge.second<< " set to " << tau.getHelper(edge) <<"\n";
 	}
 
 	/**
@@ -82,9 +86,14 @@ namespace cg{
 	<b> Output: </b> none.
 	*/	
 	void handle_split_vertex(cg::DCEL &D,int index,cg::Status &tau,const int vertex_type[]){
+		std::cout << "handling split vertex\n";
+		
 		cg::Point v = D.vertex_record[index].point;
+		std::cout << "Point "<< v <<"\n";
 		auto edge = tau.findEdgeToLeft(v);
+		std::cout <<"Edge\n" <<edge.first <<" " <<edge.second<<"\n";
 		int helper = tau.getHelper(edge);
+		std::cout << "Helper " << helper <<"\n";
 		D.addEdge(index,helper);
 		tau.setHelper(edge,index);
 		
@@ -93,6 +102,8 @@ namespace cg{
 		int v_size = D.vertex_record.size();
 		edge_i.second = D.vertex_record[(index+1)%v_size].point;
 		tau.insert(edge_i,index);
+		
+		std::cout << "handled split vertex\n";
 	}
 	
 	/**
@@ -126,9 +137,10 @@ namespace cg{
 			interior_right = true;
 		else
 			interior_right = false;
+		std::cout << "Interior right: " << interior_right <<"\n";
 		if(interior_right){
 			handle_end_vertex(D,index,tau,vertex_type);
-			handle_start_vertex(D,index,tau,vertex_type);			
+			handle_start_vertex(D,index,tau,vertex_type);		
 		}
 		else{
 			cg::Point v = D.vertex_record[index].point;
@@ -167,6 +179,7 @@ namespace cg{
 			cg::vertex v = Q.top();
 			Q.pop();
 			int index = v.edge_id;		// edge_id is same as vertex_id
+			std::cout << "Handling " << v.point << "as " << vertex_type[index] <<"\n";
 			switch(vertex_type[index]){
 				case START_VERTEX:	handle_start_vertex(D,index,tau,vertex_type);
 									break;
@@ -179,6 +192,7 @@ namespace cg{
 				case REG_VERTEX:	handle_regular_vertex(D,index,tau,vertex_type);
 									break;
 			}
+			std::cout << "Handled" << v.point << "\n----------------------\n";
 		}
 	}
 

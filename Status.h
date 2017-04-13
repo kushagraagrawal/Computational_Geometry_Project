@@ -23,6 +23,7 @@ namespace cg {
 			std::pair<cg::Point, cg::Point> findEdgeToLeft(const cg::Point& v);
 			int getHelper(const std::pair<cg::Point, cg::Point>& edgeQuery);
 			void setHelper(const std::pair<cg::Point, cg::Point>& edgeQuery, int helper);
+			void print();
 	};
 
 }

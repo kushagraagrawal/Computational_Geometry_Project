@@ -41,6 +41,15 @@ namespace cg{
 		y = p.y;
 		return *this;
 	}
+	
+	bool Point::operator==(Point &rhs) const{
+		std::cout << "== op ovld\n";
+		if(this->x == rhs.x and this->y==rhs.y)
+			return true;
+		else
+			return false;
+	}
+	
 	/**
 	* function to output coordinates of Point p
 	*/

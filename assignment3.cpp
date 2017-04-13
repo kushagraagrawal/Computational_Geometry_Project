@@ -24,24 +24,22 @@ namespace cg{
 
 		Point left_most = ch[0],right_most = ch[0];
 		 
-		 for(ll i=1;i<ch.size();i++){
+		for(ll i=1;i<ch.size();i++){
 			if(ch[i].x > right_most.x)
 				right_most = ch[i];
 			else if(ch[i].x==right_most.x)
 				if(ch[i].y > ch[i].y)
 					right_most = ch[i];
-		 }
-		 DCEL D(ch);
-		 /*
-		  * We now have the left and right most point on the Convex Hull.
-		  * The interior Points are sorted according to their X coordinates
-		  * */
-		 for(ll i=0;i<interiorPoints;i++){
-			D.addInnerVertex(interiorPoints[i],/*vid of points*/,1)
-		 }
-		 triangulate(D);
-		 
-		 	
-		 
+		}
+		DCEL D(ch);
+		/*
+		* We now have the left and right most point on the Convex Hull.
+		* The interior Points are sorted according to their X coordinates
+		* */
+		for(ll i=0;i<interiorPoints;i++){
+		D.addInnerVertex(interiorPoints[i],/*vid of points*/,1)
+		}
+		triangulate(D);
+		
 	}
 }
