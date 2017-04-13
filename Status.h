@@ -18,7 +18,7 @@ namespace cg {
 			std::map< std::pair<cg::Point, cg::Point>, int, compareEdge> M;
 			
 		public:
-			void insert(const std::pair<cg::Point, cg::Point>& edgeNew, int helper = -1);
+			void insert(const std::pair<cg::Point, cg::Point>& edgeNew, int helper);
 			void remove(const std::pair<cg::Point, cg::Point>& edgeRem);
 			std::pair<cg::Point, cg::Point> findEdgeToLeft(const cg::Point& v);
 			int getHelper(const std::pair<cg::Point, cg::Point>& edgeQuery);
