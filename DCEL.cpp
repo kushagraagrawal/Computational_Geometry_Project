@@ -8,6 +8,11 @@ Contains defintions of functions in DCEL(Doubly Connected Edge List) class.
 #include <algorithm>
 
 namespace cg{
+	/**
+	A function to join an inner point of a face to a vertex on the boundary of the face in DCEL.
+	<b> Input: </b>	Inner Point(as Point object), vertex id of vertex on boundary, and face id. <br>
+	<b> Output: </b> returns nothing, joins the point to the vertex on the boundary in DCEL.
+	*/
 	void DCEL::addInnerVertex(const cg::Point& inner,const int vid,const int fid){
 			int n_vertices = this->vertex_record.size();
 			int n_edges = this->edge_record.size();
@@ -51,7 +56,7 @@ namespace cg{
 	/**
 	A function to extract all polygons from DCEL.
 	<b> Input: </b>	None.
-	<b> Output: </b> A 2D vector of indexes of vertices of polygon. Each vectorin 2D vector corresponds to one polygon in DCEL.
+	<b> Output: </b> A 2D vector of indexes of vertices of polygon. Each vector in 2D vector corresponds to one polygon in DCEL.
 	*/
 	std::vector<std::vector<int> > DCEL::extractAllPolygons(void){
 		std::vector<std::vector<int> > polygon;		// contains all polygons, polygon[i] refers to the ith polygon

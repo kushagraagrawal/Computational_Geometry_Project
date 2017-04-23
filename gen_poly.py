@@ -7,7 +7,6 @@ for arg in sys.argv[1:]:
 
 cx, cy = np.random.rand()*100, np.random.rand()*100
 angle = np.sort(np.random.rand(int(sys.argv[1]))*2*np.pi).tolist()
-print angle
 points = []
 
 try:
@@ -18,13 +17,12 @@ except:
 
 for theta in angle:
 	r = np.random.rand()*100
-	points.append([cx+r*np.cos(theta), cy+r*np.sin(theta)])
+	points.append(np.round([cx+r*np.cos(theta), cy+r*np.sin(theta)],3))
 
-print len(points)
+print points
 
 with open(sys.argv[2],'w+') as pointFile:
 	for i in range(len(points)):
-		#print (str(points[i][0]) + " " + str(points[i][1]) + " " + str(points[i+1][0]) + " " + str(points[i+1][1]))
 		pointFile.write(str(points[i][0]) + " " + str(points[i][1]) + "\n")
 
 print ("Points written successfully.")

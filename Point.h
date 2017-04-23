@@ -21,7 +21,6 @@ namespace cg{
 			Point(const Point& p);	//!<	A constructor using another point
 			Point(double x, double y);	//!<	A constructor using x and y coordinates 
 			Point& operator=(const Point& p);	//!<	Assignment operator overloaded for points
-			bool operator==(Point &rhs) const;
 	};	
 	
 	std::ostream& operator<<(std::ostream&, const Point&);

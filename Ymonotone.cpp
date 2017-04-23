@@ -84,7 +84,7 @@ namespace cg{
 	<b> Output: </b> none.
 	*/	
 	void handle_split_vertex(cg::DCEL &D,int index,cg::Status &tau,const int vertex_type[]){
-		std::cout << "handling split vertex\n";
+//		std::cout << "handling split vertex\n";
 		
 		cg::Point v = D.vertex_record[index].point;
 		std::cout << "Point "<< v <<"\n";

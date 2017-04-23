@@ -1,8 +1,10 @@
 CPP = g++
 CFLAGS = -std=c++11
-
 test.o: Point.o DCEL.o Ymonotone.o tria.o Utility.o Status.o test.cpp
 	$(CPP) $(CFLAGS) test.cpp Point.o DCEL.o Ymonotone.o tria.o Utility.o Status.o -o test.o
+
+test_status.o: Point.o DCEL.o Ymonotone.o tria.o Utility.o Status.o test_status.cpp
+	$(CPP) $(CFLAGS) test_status.cpp Point.o DCEL.o Ymonotone.o tria.o Utility.o Status.o -o test_status.o
 
 DCEL.o: DCEL.cpp
 	$(CPP) $(CFLAGS) -c DCEL.cpp -o DCEL.o
