@@ -25,34 +25,19 @@ namespace cg{
 		/*
 		 * find the top most and the bottom most points
 		 * */
-		
-		Point top_most = ch[0],bottom_most = ch[ch.size()-1];
-		
-		for(ll i=1;i<ch.size();i++){
-			if(ch[i].y > top_most.y)
-				top_most = ch[i];
-			else if(ch[i].y==top_most.y)
-				if(ch[i].x < top_most.x)
-					top_most = ch[i];
-					
-			if(ch[i].y < bottom_most.y)
-				bottom_most = ch[i];
-			else if(ch[i].y == bottom_most.y)
-				if(ch[i].x < bottom_most.y)
-					bottom_most = ch[i];
-		}
 		DCEL D(ch);
-		
-		/*
-		 * Finding the top and bottom vid
-		 * */
-		int vidtop,vidbot;
-		for(ll i=0;i<D.vertex_record.size() -1 ;i++){
-			if(D.vertex_record[i].point == top_most)
-				vidtop = i;
-			else if(D.vertex_record[i].point == bottom_most)
-				vidbot = i;
+		int vtopid = 0,vbotid = 0;
+		for(ll i =1;i<ch.size();i++){
+			if(below(D.vertex_record[vtopid].point,D.vertex_record[i].point)){
+//					std::cout << "Top changed to " << points[i] << "\n";
+					vtopid = ch[i];
+				}
+			if(below(D.vertex_record[i].point,D.vertex_record[vbotid].point)){
+//				std::cout << "Bottom changed to " << points[i] << "\n";
+				vbotid = ch[i];
+			}
 		}
+		
 		/*
 		 * adding to DCEL 
 		 * */
