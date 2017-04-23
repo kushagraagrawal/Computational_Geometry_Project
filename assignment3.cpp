@@ -20,25 +20,47 @@ namespace cg{
 		it = std::set_difference(point_set.begin(),point_set.end(),ch.begin(),ch.end(),interiorPoints.begin());
 		interiorPoints.resize(it - interiorPoints.begin());
 		
-		std::sort(interiorPoints.begin(),interiorPoints.end(),compareXY);
+		std::sort(interiorPoints.begin(),interiorPoints.end(),compareYX);
 
-		Point left_most = ch[0],right_most = ch[0];
-		 
+		/*
+		 * find the top most and the bottom most points
+		 * */
+		
+		Point top_most = ch[0],bottom_most = ch[ch.size()-1];
+		
 		for(ll i=1;i<ch.size();i++){
-			if(ch[i].x > right_most.x)
-				right_most = ch[i];
-			else if(ch[i].x==right_most.x)
-				if(ch[i].y > ch[i].y)
-					right_most = ch[i];
+			if(ch[i].y > top_most.y)
+				top_most = ch[i];
+			else if(ch[i].y==top_most.y)
+				if(ch[i].x < top_most.x)
+					top_most = ch[i];
+					
+			if(ch[i].y < bottom_most.y)
+				bottom_most = ch[i];
+			else if(ch[i].y == bottom_most.y)
+				if(ch[i].x < bottom_most.y)
+					bottom_most = ch[i];
 		}
 		DCEL D(ch);
+		
 		/*
-		* We now have the left and right most point on the Convex Hull.
-		* The interior Points are sorted according to their X coordinates
-		* */
-		for(ll i=0;i<interiorPoints;i++){
-		D.addInnerVertex(interiorPoints[i],/*vid of points*/,1)
+		 * Finding the top and bottom vid
+		 * */
+		int vidtop,vidbot;
+		for(ll i=0;i<D.vertex_record.size() -1 ;i++){
+			if(D.vertex_record[i].point == top_most)
+				vidtop = i;
+			else if(D.vertex_record[i].point == bottom_most)
+				vidbot = i;
 		}
+		/*
+		 * adding to DCEL 
+		 * */
+		D.addInnerVertex(interiorPoints[0],top_most,1);
+		for(ll i=1;i<interiorPoints-1;i++){
+			D.addInnerVertex(interiorPoints[i],D.vertex_record[D.vertex_record.size()-1],1);
+		}
+		D.addEdge(D.vertex_record[D.vertex_record.size()-1],vidbot);
 		triangulate(D);
 		
 	}
