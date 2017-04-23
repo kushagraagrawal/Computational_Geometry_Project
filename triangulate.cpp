@@ -12,16 +12,16 @@ namespace cg{
 	<b> Output: </b> returns nothing, triangulates all partitions stored in D, by adding edges to it.
 	*/
 	void triangulate(cg::DCEL &D){
-		
+
 		int size_face_rec = D.face_record.size();
 	  	for(int face=1;face < size_face_rec;face++){
 	  	
-//			std::cout << "Face " << face << "\n";
-			
+			std::cout << "Face " << face << "\n";
+
 			std::vector<int> points = D.verticesOfFace(face);
 			
-//			for(auto x:points) std::cout << x <<" ";
-//			std::cout << "\n";
+			for(auto x:points) std::cout << x <<" ";
+			std::cout << "\n"; 
 			
 			std::vector<int> right,left;
 			int top_id=points[0], bottom_id=points[0];
@@ -38,7 +38,7 @@ namespace cg{
 					bottom_id = points[i];
 				}
 			}
-//			std::cout << "\nTop:"<< top_id << "\t Bottom:" << bottom_id <<"\n";
+			std::cout << "\nTop:"<< top_id << "\t Bottom:" << bottom_id <<"\n";
 
 			// chain[i] stores whether ith vertex in D lies in the right chain or left chain. chain[i] = -1 for left, 1 for right
 			int chain[D.vertex_record.size()];
@@ -60,14 +60,14 @@ namespace cg{
 				right.push_back(id);
 			}
 			std::reverse(right.begin(),right.end());
-/*			
+			
 			std::cout << "Left\t";
 			for(auto x:left) std::cout << x <<" ";
 			std::cout << "\nRight\t";
 			for(auto x:right) std::cout << x <<" ";
 			std::cout << "\nChain: ";
 			for(auto x:chain) std::cout << x <<" ";
-*/			
+			
 			
 			// Merge left and right chains into finallist, with y coordinate as priority.
 			std::vector<int> finallist;

@@ -1,3 +1,6 @@
+/** \file
+ * Contains the function definition of the Status used for polygon monotonization
+ * */
 #include "Status.h"
 
 namespace cg {
@@ -8,34 +11,33 @@ namespace cg {
 	 * */
 	void Status::insert(const std::pair<cg::Point, cg::Point>& edgeNew, int helper) {
 		M.insert(std::make_pair(edgeNew, helper));
-		//std::cout << M.count(edgeNew) << std::endl;
 	}
 	/**
 	 * Function to remove an edge from the status
 	 * <b> Input: </b> The edge to be removed
 	 * <b> Output: </b> none
-	 * */	
+	 * */
 	void Status::remove(const std::pair<cg::Point, cg::Point>& edgeRem) {
 		auto x = M.find(edgeRem);
-		if (x != M.end()){
-			M.erase(x);
-		}
+		if (x != M.end()) M.erase(x);
 	}
 	/**
 	 * Function to return the helper of the edge passed as a parameter
 	 * <b> Input: </b> The edge in question
 	 * <b> Output: </b> returns the helper of the edge in question. Else returns -1
-	 * */	
+	 * */
 	int Status::getHelper(const std::pair<cg::Point, cg::Point>& edgeQuery) {
 		auto x = M.find(edgeQuery);
-		if (x != M.end()) return x->second;
-		return -1;
+		if (x != M.end())
+			return x->second;
+		else
+			return -1;
 	}
 	/**
 	 * Function to set the helper of a given edge to the helper passed as a parameter
 	 * <b> Input: </b> The edge whose helper is to be set and the helper 
 	 * <b> Output: </b> none
-	 * */	
+	 * */
 	void Status::setHelper(const std::pair<cg::Point, cg::Point>& edgeQuery, int helper) {
 		auto x = M.find(edgeQuery);
 		if (x != M.end()) x->second = helper;
@@ -44,11 +46,10 @@ namespace cg {
 	 * Function to find the edge to the left the point passed as a parameter
 	 * <b> Input: </b> The point whose edge is to be found
 	 * <b> Output: </b> The edge to the left of the point 'v' 
-	 * */	
+	 * */
 	std::pair<cg::Point, cg::Point> Status::findEdgeToLeft(const cg::Point& v) {
-		auto x = M.upper_bound(std::make_pair(v, cg::Point(v.x+1e-7,v.y+1e-7)));
+		auto x = M.upper_bound(std::make_pair(v, cg::Point(0,0)));
 		if (x != M.end()) return x->first;
-		return std::make_pair(v, cg::Point(v.x+1e-7,v.y+1e-7));
 	}
 	/**
 	 * Print function for the status

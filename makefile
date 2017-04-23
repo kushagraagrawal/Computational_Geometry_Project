@@ -5,6 +5,12 @@ test.o: Point.o DCEL.o Ymonotone.o tria.o Utility.o Status.o test.cpp
 
 test_status.o: Point.o DCEL.o Ymonotone.o tria.o Utility.o Status.o test_status.cpp
 	$(CPP) $(CFLAGS) test_status.cpp Point.o DCEL.o Ymonotone.o tria.o Utility.o Status.o -o test_status.o
+	
+assig3.o : assignment3.cpp DCEL.o Point.o Ymonotone.o tria.o Utility.o Status.o convex.o
+	$(CPP) $(CFLAGS) assignment3.cpp DCEL.o Point.o Ymonotone.o tria.o Utility.o Status.o convex.o -o assig3.o
+	
+convex.o: ConvexHull.cpp Utility.o
+	$(CPP) $(CFLAGS) -c ConvexHull.cpp -o convex.o
 
 DCEL.o: DCEL.cpp
 	$(CPP) $(CFLAGS) -c DCEL.cpp -o DCEL.o

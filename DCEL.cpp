@@ -208,10 +208,12 @@ namespace cg{
 			std::cerr<< "Face index " << fid << " out of bounds\n";
 			exit(1);
 		}
+		std::cout << "\nInside verticesOfFace\n";
 		std::vector<int> vertices;				// stores indices of vertices in vertex_record vector
 		int eid = face_record[fid].edge_id;
 		cg::edge e = edge_record[eid];
 		do{
+			cout << e.origin_id <<"\t";
 			vertices.push_back(e.origin_id);
 			e = edge_record[e.nextedge_id];
 		}while(e.nextedge_id != edge_record[eid].nextedge_id);
