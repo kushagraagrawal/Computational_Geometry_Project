@@ -213,7 +213,7 @@ namespace cg{
 		int eid = face_record[fid].edge_id;
 		cg::edge e = edge_record[eid];
 		do{
-			cout << e.origin_id <<"\t";
+			std::cout << e.origin_id <<"\t";
 			vertices.push_back(e.origin_id);
 			e = edge_record[e.nextedge_id];
 		}while(e.nextedge_id != edge_record[eid].nextedge_id);
