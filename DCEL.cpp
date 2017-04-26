@@ -4,6 +4,7 @@ Contains defintions of functions in DCEL(Doubly Connected Edge List) class.
 
 #include "Point.h"
 #include "DCEL.h"
+#include "Utility.h"
 #include <iostream>
 #include <algorithm>
 
@@ -108,7 +109,7 @@ namespace cg{
 			return common[0];
 		}
 		else if(common.size()==2){
-			
+			return common[1];
 		}
 		
 		return -1;
@@ -158,11 +159,6 @@ namespace cg{
 	An empty Constructor.
 	*/
 	DCEL::DCEL(){;}
-	
-	/**
-	A Deconstructor.
-	*/
-	DCEL::~DCEL(){;}
 	
 	/**
 	A constructor to build DCEL from a simple polygon(in Anti-clockwise order).

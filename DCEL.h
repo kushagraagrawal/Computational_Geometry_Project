@@ -53,7 +53,6 @@ namespace cg{
 			std::vector<edge> edge_record;		//!< An edge table to store all half-edges.
 			
 			DCEL();	//!< An empty Constructor.
-			~DCEL();//!< A Deconstructor.
 			DCEL(const std::vector<cg::Point> &point_set); 	//!< A constructor to build DCEL from a simple polygon(in Anti-clockwise order).
 			std::vector<int> verticesOfFace(int fid);		//!< A function to find all vertices of a face.
 			std::vector<int> edgesOfVertex(int vid);		//!< A function to find all edges originating from a vertex.	 
