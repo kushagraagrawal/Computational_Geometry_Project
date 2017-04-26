@@ -140,7 +140,7 @@ namespace cg{
 //						 	std::cout << turn_direction(curr_point,top1_point,top2_point) << "\t=\t" << chain[finallist[i]] << "\n";
 						}
 						if(turn_direction(curr_point,top1_point,top2_point)==chain[finallist[i]]){
-							D.addEdge(finallist[i],top2);
+							D.addEdge(top2,finallist[i]);
 						}
 						else{
 							stck.push(top1);
@@ -155,7 +155,7 @@ namespace cg{
 			
 			stck.pop();
 			while(stck.size()>1){
-				D.addEdge(finallist.back(),stck.top());
+				D.addEdge(stck.top(),finallist.back());
 				stck.pop();
 			}
 			

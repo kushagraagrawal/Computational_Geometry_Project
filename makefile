@@ -8,7 +8,7 @@ test2.o: test2.cpp Point.o DCEL.o Ymonotone.o tria.o Utility.o Status.o
 	$(CPP) $(CFLAGS) test2.cpp Point.o DCEL.o Ymonotone.o tria.o Utility.o Status.o -o test2.o
 	
 test3.o : test3.cpp DCEL.o Point.o Ymonotone.o tria.o Utility.o Status.o convex.o
-	$(CPP) $(CFLAGS) assignment3.cpp DCEL.o Point.o Ymonotone.o tria.o Utility.o Status.o convex.o -o test3.o
+	$(CPP) $(CFLAGS) test3.cpp DCEL.o Point.o Ymonotone.o tria.o Utility.o Status.o convex.o -o test3.o
 	
 convex.o: ConvexHull.cpp Utility.o Point.o
 	$(CPP) $(CFLAGS) -c ConvexHull.cpp -o convex.o

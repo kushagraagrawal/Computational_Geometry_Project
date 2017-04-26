@@ -7,6 +7,17 @@ Contains the function definitions of common utility functions.
 #include<vector>
 
 namespace cg{
+
+	/**
+	A bool function to check if first point lies below second point.
+	<b> Input: </b>  Two objects of Point class i.e A and B.
+	<b> Output: </b> <em> true </em> if Point A lies below Point B(or to the right if both are on same horizontal line),
+					 <em> false </em> otherwise.
+	*/
+	bool below(const cg::Point &A,const cg::Point &B){
+		return ((A.y < B.y) or ( (A.y==B.y and A.x > B.x)));
+	}
+
 	/**
 	Function to write all edges of DCEL to output file
 	<b> Input: </b> DCEL D which stores the the planar subdivision, file name to which edges of DCEL are to be written. <br>

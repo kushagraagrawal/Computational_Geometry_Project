@@ -12,15 +12,7 @@ Contains the function definitions of the monotonization of a regular polygon sto
 
 namespace cg{
 
-	/**
-	A bool function to check if first point lies below second point.
-	<b> Input: </b>  Two objects of Point class i.e A and B.
-	<b> Output: </b> <em> true </em> if Point A lies below Point B(or to the right if both are on same horizontal line),
-					 <em> false </em> otherwise.
-	*/
-	bool below(const cg::Point &A,const cg::Point &B){
-		return ((A.y < B.y) or ( (A.y==B.y and A.x > B.x)));
-	}
+	
 
 	/**
 	A function to find the type of the vertex of the simple polygon(i.e start vertex/end vertex/split vertex/merge vertex/regular vertex).
@@ -28,7 +20,6 @@ namespace cg{
 	<b> Output: </b>	The type of vertex i.e start vertex/end vertex/split vertex/merge vertex/regular vertex,
 						denoted by 0,1,2,3 and 4 respectively.
 	*/
-
 	int typeOfVertex(const cg::DCEL &D,int index){
 		int v_size = D.vertex_record.size();
 		cg::Point prev = D.vertex_record[(index-1+v_size)%v_size].point;

@@ -33,15 +33,7 @@ namespace cg{
 	<b> Output: </b> none.
 	*/
 	void make_monotone(cg::DCEL &D);
-	
-	/**
-	A bool function to check if first point lies below second point.
-	<b> Input: </b>  Two objects of Point class i.e A and B.
-	<b> Output: </b> <em> true </em> if Point A lies below Point B(or to the right if both are on same horizontal line),
-					 <em> false </em> otherwise.
-	*/
-	bool below(const cg::Point &A,const cg::Point &B);
-	
+		
 	/**
 	A function to handle a start vertex in the polygon.
 	<b> Input: </b>  An object of DCEL class i.e D, index of the vertex, an object of Status class. <br>

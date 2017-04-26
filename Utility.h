@@ -14,6 +14,14 @@ Contains declaration of common utility fucntions.
 
 namespace cg{
 	/**
+	A bool function to check if first point lies below second point.
+	<b> Input: </b>  Two objects of Point class i.e A and B.
+	<b> Output: </b> <em> true </em> if Point A lies below Point B(or to the right if both are on same horizontal line),
+					 <em> false </em> otherwise.
+	*/
+	bool below(const cg::Point &A,const cg::Point &B);
+
+	/**
 	Function to write all edges of DCEL to output file
 	<b> Input: </b> DCEL D which stores the the planar subdivision, file name to which edges of DCEL are to be written. <br>
 	<b> Output: </b> returns nothing, writes the edges of the DCEL to output file in the format "x1 y1 x2 y2", where (x1,y1) and (x2,y2) 		are the end points of an edge.

@@ -107,9 +107,11 @@ namespace cg{
 		else if(common.size()==1){
 			return common[0];
 		}
-		else{
-			return common[1];
+		else if(common.size()==2){
+			
 		}
+		
+		return -1;
 	}
 	
 	/**
@@ -119,7 +121,7 @@ namespace cg{
 	*/
 	int DCEL::findEdge(int vid,int fid){
 		std::vector<int> edges_vid = edgesOfVertex(vid);
-		std::cout << "Edges with vertex " << vid << "\n";
+		std::cout << "\nEdges with vertex " << vid << ":\t";
 		for(auto x:edges_vid){
 			std::cout << x <<" ";
 			if(edge_record[x].face_id == fid){
@@ -268,10 +270,15 @@ namespace cg{
 	// Add an edge between two vertices. Two half edges are formed between vertex(vid1) and vertex(vid2).
 	void DCEL::addEdge(const int vid1,const int vid2){
 		
+		if(adjacentVertices(vid1,vid2)){
+			std::cout << "Edge already exists b/w " << vid1 <<" & " << vid2 <<"\n";
+			return;
+		}
+		
 		int	fid = this->commonFace(vid1,vid2);
 		int eid1 = this->findEdge(vid1,fid);
 		int eid2 = this->findEdge(vid2,fid);		
-		std::cout << "Added edge b/w " << vid1 << " & " << vid2 << "\n";
+		std::cout << "\nAdded edge b/w " << vid1 << " & " << vid2 << "\n";
 		
 		cg::face new_face;
 		new_face.edge_id = eid1;
