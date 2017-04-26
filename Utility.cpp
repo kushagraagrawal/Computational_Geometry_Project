@@ -85,8 +85,16 @@ namespace cg{
 	*/
 	int turn_direction(const Point& p, const Point& q, const Point& r){
 		// determinant value
-		double epsilon = 1e-10;
+		//double epsilon = 1e-10;
 		double det = (1*(q.x*r.y - q.y*r.x) - p.x*(1*r.y - q.y*1) + p.y*(1*r.x - q.x*1));
+				if (det == 0.0){
+			return 0;
+		}
+		else if (det > 0.0){
+			return 1;
+		}
+		else return -1;
+		/*
 		if (det > epsilon){
 			return 1;
 		}
@@ -94,6 +102,7 @@ namespace cg{
 			return -1;
 		}
 		else return 0;
+		*/
 	}
 	
 	/**

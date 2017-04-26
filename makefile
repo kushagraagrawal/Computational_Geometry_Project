@@ -1,33 +1,35 @@
 CPP = g++
 CFLAGS = -std=c++11
-test.o: Point.o DCEL.o Ymonotone.o tria.o Utility.o Status.o test.cpp
-	$(CPP) $(CFLAGS) test.cpp Point.o DCEL.o Ymonotone.o tria.o Utility.o Status.o -o test.o
 
-test_status.o: Point.o DCEL.o Ymonotone.o tria.o Utility.o Status.o test_status.cpp
-	$(CPP) $(CFLAGS) test_status.cpp Point.o DCEL.o Ymonotone.o tria.o Utility.o Status.o -o test_status.o
+test1.o: test1.cpp Point.o Utility.o convex.o
+	$(CPP) $(CFLAGS) test1.cpp convex.o Point.o Utility.o -o test1.o
+
+test2.o: test2.cpp Point.o DCEL.o Ymonotone.o tria.o Utility.o Status.o 
+	$(CPP) $(CFLAGS) test2.cpp Point.o DCEL.o Ymonotone.o tria.o Utility.o Status.o -o test2.o
 	
-assig3.o : assignment3.cpp DCEL.o Point.o Ymonotone.o tria.o Utility.o Status.o convex.o
-	$(CPP) $(CFLAGS) assignment3.cpp DCEL.o Point.o Ymonotone.o tria.o Utility.o Status.o convex.o -o assig3.o
+test3.o : test3.cpp DCEL.o Point.o Ymonotone.o tria.o Utility.o Status.o convex.o
+	$(CPP) $(CFLAGS) assignment3.cpp DCEL.o Point.o Ymonotone.o tria.o Utility.o Status.o convex.o -o test3.o
 	
-convex.o: ConvexHull.cpp Utility.o
+convex.o: ConvexHull.cpp Utility.o Point.o
 	$(CPP) $(CFLAGS) -c ConvexHull.cpp -o convex.o
 
-DCEL.o: DCEL.cpp
-	$(CPP) $(CFLAGS) -c DCEL.cpp -o DCEL.o
-	
-Point.o: Point.h Point.cpp
-	$(CPP) $(CFLAGS) -c Point.cpp -o Point.o
-
-Ymonotone.o: Ymonotone.cpp Ymonotone.h
-	$(CPP) $(CFLAGS) -c Ymonotone.cpp -o Ymonotone.o
-
-tria.o: triangulate.cpp triangulate.h
+tria.o: triangulate.cpp Point.o DCEL.o Utility.o Ymonotone.o
 	$(CPP) $(CFLAGS) -c triangulate.cpp -o tria.o
 	
-Utility.o: Utility.cpp Utility.h
+Ymonotone.o: Ymonotone.cpp Point.o DCEL.o Utility.o Status.o
+	$(CPP) $(CFLAGS) -c Ymonotone.cpp -o Ymonotone.o
+
+Status.o: Status.cpp Point.o Utility.o
+	$(CPP) $(CFLAGS) -c Status.cpp -o Status.o
+	
+Utility.o: Utility.cpp Point.o DCEL.o
 	$(CPP) $(CFLAGS) -c Utility.cpp -o Utility.o
 	
-Status.o: Status.cpp Status.h
-	$(CPP) $(CFLAGS) -c Status.cpp -o Status.o
+DCEL.o: DCEL.cpp Point.o
+	$(CPP) $(CFLAGS) -c DCEL.cpp -o DCEL.o
+	
+Point.o: Point.h
+	$(CPP) $(CFLAGS) -c Point.cpp -o Point.o
+	
 clean:
 	rm -f *.o *.out

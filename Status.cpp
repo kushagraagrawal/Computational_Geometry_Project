@@ -1,6 +1,6 @@
 /** \file
- * Contains the function definition of the Status used for polygon monotonization
- * */
+Contains the function definition of the Status used for polygon monotonization
+*/
 #include "Status.h"
 
 namespace cg {

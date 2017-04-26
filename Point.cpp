@@ -18,8 +18,10 @@ namespace cg{
 	* <b> Input: </b> Point P. <br>
 	* <b> Output: </b> Sets value of x and y to x and y of Point p
 	*/
-	Point::Point(const Point& p): x(p.x),y(p.y)
-	{;}
+	Point::Point(const Point& p){
+		x = p.x;
+		y = p.y;
+	}
 	/**
 	* Constructor using x and y coordinates
 	* <b> Input: </b> x and y coordinates px and py. <br>

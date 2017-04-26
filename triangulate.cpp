@@ -96,8 +96,8 @@ namespace cg{
 			}
 			finallist.pop_back();
 			
-//			std::cout << "\nMerged\n";
-//			for(auto x:finallist) std::cout << x <<" ";
+			std::cout << "\nMerged\n";
+			for(auto x:finallist) std::cout << x <<" ";
 			
 			// Add edges in DCEL when needed, to triangulate.
 		 	std::stack<int> stck;
@@ -105,10 +105,10 @@ namespace cg{
 			stck.push(finallist[1]);
 			 
 			for(int i=2;i<finallist.size()-1;i++){
-//				std::cout << "i=" << i << "\n";
+				std::cout << "\nIteration i=" << i << "\n";
 				//if they on 2 different chains			 
 				if(chain[stck.top()]!= chain[finallist[i]]){
-//					std::cout << stck.top() <<" and " << finallist[i] << " lie on diff chain\n";
+					std::cout << stck.top() <<" and " << finallist[i] << " lie on diff chain\n";
 					while(!stck.empty()){
 						if(stck.size()>1)
 							D.addEdge(stck.top(),finallist[i]);
@@ -119,7 +119,7 @@ namespace cg{
 				}
 				// if they are on same chain
 				else{
-//					std::cout << stck.top() <<" and " << finallist[i] << " lie on same chain\n";
+					std::cout << stck.top() <<" and " << finallist[i] << " lie on same chain\n";
 					while(!stck.empty()){
 						int top1 = stck.top();
 						stck.pop();
@@ -150,7 +150,7 @@ namespace cg{
 						}
 					}
 				}
-//				std::cout << "Finished i=" << i << "\n------------------------------------\n";
+				std::cout << "Finished i=" << i << "\n------------------------------------\n";
 			}
 			
 			stck.pop();

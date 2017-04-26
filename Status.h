@@ -1,6 +1,6 @@
 /** \file
- * Contains the function definition of the Status used for polygon monotonization
- * */
+Contains the function declaration of the Status used for polygon monotonization
+*/
 #ifndef STATUS_H_INCLUDED
 #define STATUS_H_INCLUDED
 

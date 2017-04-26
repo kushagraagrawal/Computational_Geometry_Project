@@ -41,6 +41,9 @@ namespace cg{
 			this->vertex_record.push_back(std::move(newVertex));
 			this->edge_record.push_back(std::move(Edge1));
 			this->edge_record.push_back(std::move(Edge2));			
+			
+			this->edge_record[v_prevEdge].nextedge_id = n_edges;
+			this->edge_record[v_nextEdge].prevedge_id = n_edges+1;			
 	}
 
 	/**
@@ -80,11 +83,12 @@ namespace cg{
 		std::fill(visited,visited+f_size,false);
 		
 		std::vector<int> edges_ID1 = edgesOfVertex(vid1);
-		
+		std::cout << "\nEdges of Vertex " << vid1 <<": ";
 		for(auto x:edges_ID1){
+			std::cout << x <<" ";
 			visited[edge_record[x].face_id]=true;
 		}
-		
+		std::cout << "\n";
 		std::vector<int> edges_ID2 = edgesOfVertex(vid2);
 		
 		std::vector<int> common;
@@ -92,11 +96,19 @@ namespace cg{
 			if(edge_record[x].face_id!=0 && visited[edge_record[x].face_id])		// exclude outer face i.e f[0]
 				common.push_back(edge_record[x].face_id);
 		}
-		if(common.size()==1)
+		std::cout <<"\nCommon Faces:\t";
+		for(auto x:common) std::cout << x <<" ";
+		std::cout <<"\n";
+		
+		if(common.size()==0){
+			std::cerr << "No common face b/w " << vid1 << " & " << vid2 << "\n";
+			exit(1);
+		}
+		else if(common.size()==1){
 			return common[0];
+		}
 		else{
-			std::cerr << "Not exactly one common face b/w " << vid1 << " & " << vid2 << "\n";
-			return -1;
+			return common[1];
 		}
 	}
 	
@@ -107,11 +119,15 @@ namespace cg{
 	*/
 	int DCEL::findEdge(int vid,int fid){
 		std::vector<int> edges_vid = edgesOfVertex(vid);
+		std::cout << "Edges with vertex " << vid << "\n";
 		for(auto x:edges_vid){
+			std::cout << x <<" ";
 			if(edge_record[x].face_id == fid){
 				return x;
 			}
 		}
+		std::cout << "\n";
+		this->printEdgeRecord();
 		std::cerr << "No edge with vertex " << vid << " & face " << fid <<"\n";
 		return -1;
 	}
@@ -208,12 +224,10 @@ namespace cg{
 			std::cerr<< "Face index " << fid << " out of bounds\n";
 			exit(1);
 		}
-		std::cout << "\nInside verticesOfFace\n";
 		std::vector<int> vertices;				// stores indices of vertices in vertex_record vector
 		int eid = face_record[fid].edge_id;
 		cg::edge e = edge_record[eid];
 		do{
-			cout << e.origin_id <<"\t";
 			vertices.push_back(e.origin_id);
 			e = edge_record[e.nextedge_id];
 		}while(e.nextedge_id != edge_record[eid].nextedge_id);
@@ -254,7 +268,7 @@ namespace cg{
 	// Add an edge between two vertices. Two half edges are formed between vertex(vid1) and vertex(vid2).
 	void DCEL::addEdge(const int vid1,const int vid2){
 		
-		int fid = this->commonFace(vid1,vid2);
+		int	fid = this->commonFace(vid1,vid2);
 		int eid1 = this->findEdge(vid1,fid);
 		int eid2 = this->findEdge(vid2,fid);		
 		std::cout << "Added edge b/w " << vid1 << " & " << vid2 << "\n";
