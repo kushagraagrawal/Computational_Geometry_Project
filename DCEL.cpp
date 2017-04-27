@@ -2,13 +2,104 @@
 Contains defintions of functions in DCEL(Doubly Connected Edge List) class.
 */
 
-#include "Point.h"
 #include "DCEL.h"
+#include "Point.h"
 #include "Utility.h"
 #include <iostream>
 #include <algorithm>
 
 namespace cg{
+	// Flips edge <BD,DB> to  <AC,CA>
+	
+	std::vector<int> DCEL::flipEdge(int BD_id){
+		int DC_id = this->edge_record[BD_id].nextedge_id;
+		int CB_id = this->edge_record[DC_id].nextedge_id;
+	
+		int DB_id = this->edge_record[BD_id].twinedge_id;
+		int BA_id = this->edge_record[DB_id].nextedge_id;
+		int AD_id = this->edge_record[BA_id].nextedge_id;		
+		
+		int A_id = this->edge_record[AD_id].origin_id;
+		int D_id = this->edge_record[DC_id].origin_id;
+		int C_id = this->edge_record[CB_id].origin_id;
+		int B_id = this->edge_record[BA_id].origin_id;
+		
+		int f_BCD = this->edge_record[BD_id].face_id;
+		int f_ABD =	this->edge_record[DB_id].face_id;
+
+		// For BD edge		
+		this->edge_record[BD_id].origin_id = A_id;
+		this->edge_record[BD_id].nextedge_id = CB_id;
+		this->edge_record[BD_id].prevedge_id = BA_id;
+		
+		// For DB edge
+		this->edge_record[DB_id].origin_id = C_id;
+		this->edge_record[DB_id].nextedge_id = AD_id;
+		this->edge_record[DB_id].prevedge_id = DC_id;
+		
+		// AD
+		this->edge_record[AD_id].nextedge_id = DC_id;
+		this->edge_record[AD_id].prevedge_id = DB_id;
+		
+		// DC
+		this->edge_record[DC_id].nextedge_id = DB_id;
+		this->edge_record[DC_id].prevedge_id = AD_id;
+		this->edge_record[DC_id].face_id = f_ABD;
+		
+		// CB
+		this->edge_record[CB_id].nextedge_id = BA_id;
+		this->edge_record[CB_id].prevedge_id = BD_id;
+		
+		// BA
+		this->edge_record[BA_id].nextedge_id = BD_id;
+		this->edge_record[BA_id].prevedge_id = CB_id;
+		this->edge_record[BA_id].face_id = f_BCD;
+		
+		this->vertex_record[B_id].edge_id = BA_id;
+		this->vertex_record[D_id].edge_id = DC_id;		
+		
+		this->face_record[f_ABD].edge_id = AD_id;
+		this->face_record[f_BCD].edge_id = CB_id;
+		
+		std::vector<int> adj_edges = {AD_id,DC_id,CB_id,BA_id};
+		return adj_edges;
+	}
+	// Two triangles ABD and BDC with a common edge BD and its twin DB ion the middle.
+	// The CCW order of vertices is A, D, C, B
+	bool DCEL::isDelaunay(int BD_id){
+		int DC_id = this->edge_record[BD_id].nextedge_id;
+		int CB_id = this->edge_record[DC_id].nextedge_id;
+	
+		int DB_id = this->edge_record[BD_id].twinedge_id;
+		int BA_id = this->edge_record[DB_id].nextedge_id;
+		int AD_id = this->edge_record[BA_id].nextedge_id;
+		
+		int f_BCD = this->edge_record[BD_id].face_id;
+		int f_ABD =	this->edge_record[DB_id].face_id;
+		
+		std::vector<Point> Quad;		// In anti-clockwise order
+		Quad.push_back(this->vertex_record[this->edge_record[AD_id].origin_id].point);		//	Point A
+		Quad.push_back(this->vertex_record[this->edge_record[DC_id].origin_id].point);		//	Point D
+		Quad.push_back(this->vertex_record[this->edge_record[CB_id].origin_id].point);		//	Point C
+		Quad.push_back(this->vertex_record[this->edge_record[BA_id].origin_id].point);		//	Point B
+		
+		if(!isConvex(Quad)){
+			return true;
+		}
+		
+		Point centre1 = circumcentre(Quad[0],Quad[1],Quad[3]);
+		Point centre2 = circumcentre(Quad[1],Quad[2],Quad[3]);
+		std::cout << Quad[0] << " " << Quad[1] << " " << Quad[3] << "\t" << centre1 <<"\n";
+		std::cout << Quad[1] << " " << Quad[2] << " " << Quad[3] << "\t" << centre2 <<"\n";
+		
+		if(euclideanDistance(centre1,Quad[2]) < euclideanDistance(centre1,Quad[0]))
+			return false;
+		else if(euclideanDistance(centre2,Quad[0]) < euclideanDistance(centre2,Quad[1]))
+			return false;
+		
+		return true;
+	}
+	
 	/**
 	A function to join an inner point of a face to a vertex on the boundary of the face in DCEL.
 	<b> Input: </b>	Inner Point(as Point object), vertex id of vertex on boundary, and face id. <br>

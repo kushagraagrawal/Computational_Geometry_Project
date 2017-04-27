@@ -3,10 +3,40 @@ Contains the function definitions of common utility functions.
 */
 
 #include "Utility.h"
+#include "DCEL.h"
 #include<iomanip>
 #include<vector>
 
 namespace cg{
+
+	bool isConvex(const std::vector<Point> &P){
+		if(P.size()<=2){
+			std::cerr << "In isConvex: Polygon has less than 3 edges\n";
+			exit(1);
+		}
+		if(P.size()==3){
+			return true;
+		}
+		int sz = P.size();
+		for(int i=0;i<sz;i++){
+			double interior_angle = polarAngle(P[i],P[(i+1)%sz],P[(i+2)%sz]);
+			if(interior_angle >= 180.00)
+				return false;
+		}
+		return true;
+	}
+
+	Point circumcentre(const Point &A,const Point &B,const Point &C){
+		double D =  2*( A.y*C.x + B.y*A.x - B.y*C.x - A.y*B.x -C.y*A.x + C.y*B.x);
+		if(D==0){
+			std::cerr << A << " " << B <<" & " << C << " are collinear\n";
+			exit(1);
+		}
+		double x_centre = ((double)(B.y-C.y)*(A.x*A.x + A.y*A.y) + (C.y-A.y)*(B.x*B.x + B.y*B.y) + (A.y-B.y)*(C.x*C.x + C.y*C.y)) / (double)D ;
+		double y_centre = ((C.x-B.x)*(A.x*A.x + A.y*A.y) + (A.x-C.x)*(B.x*B.x + B.y*B.y) + (B.x-A.x)*(C.x*C.x + C.y*C.y)) / (double)D ;
+		return Point(x_centre,y_centre);
+	}
+
 
 	/**
 	A bool function to check if first point lies below second point.

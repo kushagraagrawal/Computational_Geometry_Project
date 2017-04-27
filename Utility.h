@@ -9,10 +9,15 @@ Contains declaration of common utility fucntions.
 #include <vector>
 #include <cmath>
 #include "Point.h"
-#include "DCEL.h"
 
 
 namespace cg{
+	class DCEL;
+	
+	bool isConvex(const std::vector<Point> &P);
+	Point circumcentre(const Point &A,const Point &B,const Point &C);
+
+
 	/**
 	A bool function to check if first point lies below second point.
 	<b> Input: </b>  Two objects of Point class i.e A and B.

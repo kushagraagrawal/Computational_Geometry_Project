@@ -1,9 +1,6 @@
 import matplotlib.pyplot as plt
 import sys
 
-point = []
-edge = []
-
 '''with open(sys.argv[1],'r') as pointFile:
 	tempPoint = pointFile.read().split("\n")
 
@@ -12,6 +9,8 @@ for pair in tempPoint:
 
 fig = []
 for arg in sys.argv[1:]:
+	point = []
+	edge = []
 	with open(arg,'r') as edgeFile:
 		tempEdge = edgeFile.read().split("\n")
 

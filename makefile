@@ -22,13 +22,13 @@ Ymonotone.o: Ymonotone.cpp Point.o DCEL.o Utility.o Status.o
 Status.o: Status.cpp Point.o Utility.o
 	$(CPP) $(CFLAGS) -c Status.cpp -o Status.o
 	
-Utility.o: Utility.cpp Point.o DCEL.o
+Utility.o: Utility.cpp DCEL.o
 	$(CPP) $(CFLAGS) -c Utility.cpp -o Utility.o
 	
 DCEL.o: DCEL.cpp Point.o
 	$(CPP) $(CFLAGS) -c DCEL.cpp -o DCEL.o
 	
-Point.o: Point.h
+Point.o: Point.cpp
 	$(CPP) $(CFLAGS) -c Point.cpp -o Point.o
 	
 clean:

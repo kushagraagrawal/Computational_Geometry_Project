@@ -63,6 +63,8 @@ namespace cg{
 			std::vector<std::vector<int> > extractAllPolygons(void); //!< A function to extract all polygons from DCEL.
 			int nextVertex(int vid,int face_id);			//!< A function to find the index of next vertex of a given vertex in a face.
 			void addInnerVertex(const cg::Point& inner,const int vid,const int fid);		//!< 	A function to join an inner point of a face to a vertex on the boundary of the face in DCEL.
+			bool isDelaunay(int eid);
+			std::vector<int> flipEdge(int BD_id);
 			
 			// Only for debugging purpose
 			void printVertexRecord(void);	//!< A function to print vertex table of the DCEL.
