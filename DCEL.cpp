@@ -61,7 +61,7 @@ namespace cg{
 		this->face_record[f_ABD].edge_id = AD_id;
 		this->face_record[f_BCD].edge_id = CB_id;
 		
-		std::vector<int> adj_edges = {AD_id,DC_id,CB_id,BA_id};
+		std::vector<int> adj_edges = {AD_id,DC_id,CB_id,BA_id};					
 		return adj_edges;
 	}
 	// Two triangles ABD and BDC with a common edge BD and its twin DB ion the middle.
@@ -89,8 +89,8 @@ namespace cg{
 		
 		Point centre1 = circumcentre(Quad[0],Quad[1],Quad[3]);
 		Point centre2 = circumcentre(Quad[1],Quad[2],Quad[3]);
-		std::cout << Quad[0] << " " << Quad[1] << " " << Quad[3] << "\t" << centre1 <<"\n";
-		std::cout << Quad[1] << " " << Quad[2] << " " << Quad[3] << "\t" << centre2 <<"\n";
+//		std::cout << Quad[0] << " " << Quad[1] << " " << Quad[3] << "\t" << centre1 <<"\n";
+//		std::cout << Quad[1] << " " << Quad[2] << " " << Quad[3] << "\t" << centre2 <<"\n";
 		
 		if(euclideanDistance(centre1,Quad[2]) < euclideanDistance(centre1,Quad[0]))
 			return false;

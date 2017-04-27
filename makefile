@@ -9,6 +9,9 @@ test2.o: test2.cpp Point.o DCEL.o Ymonotone.o tria.o Utility.o Status.o
 	
 test3.o : test3.cpp DCEL.o Point.o Ymonotone.o tria.o Utility.o Status.o convex.o
 	$(CPP) $(CFLAGS) test3.cpp DCEL.o Point.o Ymonotone.o tria.o Utility.o Status.o convex.o -o test3.o
+	@echo "\n./test3.o ./test_tria/test1.txt"
+	@echo "python plot_poly.py out1.txt out2.txt out3.txt out4.txt\n"
+
 	
 convex.o: ConvexHull.cpp Utility.o Point.o
 	$(CPP) $(CFLAGS) -c ConvexHull.cpp -o convex.o

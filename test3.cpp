@@ -66,18 +66,15 @@ namespace cg{
 			}
 			D.addEdge(D.vertex_record.size()-1,bottom_vertex_id);
 		}
-//		D.printVertexRecord();
-//		D.printEdgeRecord();
-//		D.printFaceRecord();
 		std::cout <<"\nTriangulation started\n";
 		cg::writeEdges(D,(char *)"out2.txt");
 		cg::triangulate(D);
 		return D;
 	}
 	
+	
 	DCEL delaunay_Triangulation(const std::vector<Point>& point_set){
 		DCEL D = triangulatePoints(point_set);
-		D.printEdgeRecord();
 		cg::writeEdges(D,(char *)"out3.txt");
 		// Find all interior edges
 		int num_edges = D.edge_record.size();
@@ -91,9 +88,8 @@ namespace cg{
 			auto edge1 = D.edge_record[i];
 			auto edge2 = D.edge_record[edge1.twinedge_id];
 			if(edge1.face_id ==0 || edge2.face_id==0){
-				is_interior[i]=false;
+				is_interior[i] = is_interior[edge1.twinedge_id]=false;
 			}
-			is_interior[edge1.twinedge_id]=false;
 		}
 		std::cout << "\nInterior edges:\t";
 		for(int i=0;i<num_edges;i++){
@@ -105,28 +101,35 @@ namespace cg{
 		std::fill(is_Del,is_Del+num_edges,-1);
 		
 		// Mark all interior edges as Non-delaunay
-		std::stack<int> stck;
+		std::stack<std::pair<int,int> > stck;
 		for(int i=0;i<num_edges;i++){
 			if(is_interior[i]){
-				is_Del[i] = 0;
-				stck.push(i);
+				is_Del[i] = is_Del[D.edge_record[i].twinedge_id] = 0;
+				stck.push({i,D.edge_record[i].twinedge_id});
 			}
 		}
 		
 		while(!stck.empty()){
-			int eid = stck.top();
-			is_Del[eid]=1;
+			int eid = stck.top().first;
+			is_Del[eid]=is_Del[D.edge_record[eid].twinedge_id]=1;
 			stck.pop();
 			
 			if(!D.isDelaunay(eid)){
 				std::cout << "\nFlipping " << eid <<"\n";
 				std::vector<int> adj_edges = D.flipEdge(eid);
+				
 				for(auto x:adj_edges){
 					if(is_interior[x] && is_Del[x]==1)
-						stck.push(x);
+						stck.push({x,D.edge_record[x].twinedge_id});
 				}
 			}
 		}
+		std::cout << "\nEdges remained\n";
+		for(int i=0;i<num_edges;i++){
+			if(is_interior[i] && !D.isDelaunay(i))
+				std::cout << i <<" ";
+		}
+		std::cout <<"\n";
 		cg::writeEdges(D,(char *)"out4.txt");
 		return D;
 	}
@@ -138,10 +141,25 @@ int main(int argc, char* argv[]) {
 	cg::readPointSet(argv[1],P);
 
 	cg::DCEL D = delaunay_Triangulation(P);
-//	cg::writeEdges(D, argv[2]);
-//	D.printEdgeRecord();
-//	D.printVertexRecord();
-//	D.printFaceRecord();
+	
+	std::ofstream file((char *)"circles.txt");
+
+	if(!file.is_open()){
+		std::cerr << "Output File not found\n";
+		exit(1);
+	}
+	std::cout << "\nFaces:\n";
+	for(int i=1;i<D.face_record.size();i++){
+		std::vector<int> pid = D.verticesOfFace(i);
+		for(auto x:pid) std::cout << x <<" ";
+		std::cout << "\n";
+		cg::Point A = D.vertex_record[pid[0]].point;
+		cg::Point B = D.vertex_record[pid[1]].point;
+		cg::Point C = D.vertex_record[pid[2]].point;
+		cg::Point centre = cg::circumcentre(A,B,C);
+		double radius = cg::euclideanDistance(centre,A);
+		file << centre.x << " " << centre.y << " " <<radius << "\n";
+	}
 	return 0;
 }
 
