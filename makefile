@@ -13,6 +13,8 @@ test3.o : test3.cpp DCEL.o Point.o Ymonotone.o tria.o Utility.o Status.o convex.
 	@echo "python plot_poly.py out1.txt out2.txt out3.txt &"
 	@echo "python plot_delaunay.py out4.txt circles.txt\n"
 
+temp.o : temp.cpp Point.o
+	$(CPP) $(CFLAGS) temp.cpp Point.o -o temp.o
 	
 convex.o: ConvexHull.cpp Utility.o Point.o
 	$(CPP) $(CFLAGS) -c ConvexHull.cpp -o convex.o
