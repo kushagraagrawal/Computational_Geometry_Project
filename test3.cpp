@@ -1,3 +1,8 @@
+/** \file
+ * File that implements the third assignment of CS F441 - Selected Topics in Computer Science.
+ * The problem statement of the assignment is to use the already existing API developed in the previous assignments to create the triangulation of n given points in 2D plane.
+ * 
+ * */
 #include <iostream>
 #include <set>
 #include <stack>
@@ -10,20 +15,25 @@
 #include "ConvexHull.h"
 
 namespace cg{
-
+	/**
+	 * Function to find the triangulation of a set of points in 2D plane. This is accomplished by finding the convex hull of the set of 2D points and connecting the interior points to 
+	 * form 2 y-monotone polygons. They are then triangulated using the triangulate function developed earlier.
+	 * <b> Input: </b> A set of points in 2D space
+	 * <b> Output: </b> the triangulation of the point set stored in the DCEL.
+	 * */
 	DCEL triangulatePoints(const std::vector<Point>& point_set){
-
+		// calling Andrew's algorithm function to find convex hull of point_set and store it in hull.
 		std::vector<Point> hull = cg::convexHullAndrews(point_set);
 
 		std::cout << "\nPoints on Convex Hull:\n";
 		for(auto x:hull) std::cout << x <<"\t";
 		std::cout << "\n";
-
+		// forming a set of the convex hull points
 		std::set<std::pair<double,double> > hull_set;
 		for(auto h: hull){
 			hull_set.insert(std::make_pair(h.x, h.y));
 		}
-		
+		// vector to store interior points, i.e. points not on the convex hull.
 		std::vector<cg::Point> interior_points;
 		for(auto p:point_set){
 			auto pt = std::make_pair(p.x,p.y);
@@ -31,7 +41,7 @@ namespace cg{
 				interior_points.push_back(p);
 			}
 		}
-		
+		// sorting the interior points on the basis of Y-coordinates 
 		std::sort(interior_points.begin(),interior_points.end(),compareYX);
 		std::cout << "\nInterior Points:\n";
 		for(auto x:interior_points) std::cout << x <<"\t";
@@ -55,7 +65,7 @@ namespace cg{
 		}
 		std::cout << "\nTop of Hull's id: "<< top_vertex_id << "\n";
 		std::cout << "Bottom of Hull's id: "<< bottom_vertex_id << "\n\n";		
-
+		// Dividing the polygon formed into two y-monotone polygons by joining the top-most vertex of convex hull to the highest interior point, then that point to the next interior point and so on.
 		if(interior_points.size()>0){
 			D.addInnerVertex(interior_points[0],top_vertex_id,1);
 //			D.printEdgeRecord();
@@ -64,6 +74,7 @@ namespace cg{
 				D.addInnerVertex(interior_points[i],D.vertex_record.size()-1,1);
 //				D.printEdgeRecord(); std::cout <<"\n\n";
 			}
+			// adding the lowest interior point and lowest point on CH to divide the convex hull into two polygons, i.e faces
 			D.addEdge(D.vertex_record.size()-1,bottom_vertex_id);
 		}
 		std::cout <<"\nTriangulation started\n";
@@ -71,7 +82,13 @@ namespace cg{
 		cg::triangulate(D);
 		return D;
 	}
-	
+	/**
+	 * Function to triangulate a set of points using Delaunay Triangulation.
+	 * This is done by constructing an arbitrary triangulation T of point set S, pushing all non-locally interior edges of T on stack and mark them
+	 * converting non-locally Delaunay edges to Delaunay edges.
+	 * <b> Input: </b> A set of points in 2D space
+	 * <b> Output: </b> the triangulation of the point set stored in the DCEL.
+	 * */
 	
 	DCEL delaunay_Triangulation(const std::vector<Point>& point_set){
 		DCEL D = triangulatePoints(point_set);
@@ -108,7 +125,7 @@ namespace cg{
 				stck.push({i,D.edge_record[i].twinedge_id});
 			}
 		}
-		
+		//Flipping the edges in the stack if they are not locally Delaunay
 		while(!stck.empty()){
 			int eid = stck.top().first;
 			is_Del[eid]=is_Del[D.edge_record[eid].twinedge_id]=1;
