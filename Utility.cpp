@@ -8,7 +8,11 @@ Contains the function definitions of common utility functions.
 #include<vector>
 
 namespace cg{
-
+	/**
+	 * Function to find if the polygon represented by the set of points is convex or not
+	 * <b> Input: </b> Vector of Points P
+	 * <b> Output: </b> true if the Polygon is convex. False otherwise
+	 * */
 	bool isConvex(const std::vector<Point> &P){
 		if(P.size()<=2){
 			std::cerr << "In isConvex: Polygon has less than 3 edges\n";
@@ -25,7 +29,11 @@ namespace cg{
 		}
 		return true;
 	}
-
+	/**
+	 * Function to find the circumcentre of the triangle formed by points A, B, C
+	 * <b> Input: </b> Points A,B,C
+	 * <b> Output: </b> Circumcentre of the triangle 
+	 * */
 	Point circumcentre(const Point &A,const Point &B,const Point &C){
 		double D =  2*( A.y*C.x + B.y*A.x - B.y*C.x - A.y*B.x -C.y*A.x + C.y*B.x);
 		if(D==0){
