@@ -18,8 +18,11 @@ test3.o : test3.cpp DCEL.o Point.o Ymonotone.o tria.o Utility.o Status.o convex.
 	@echo "python plot_poly.py out1.txt out2.txt out3.txt &"
 	@echo "python plot_delaunay.py out4.txt circles.txt\n"
 
-temp.o : temp.cpp Point.o
-	$(CPP) $(CFLAGS) temp.cpp Point.o -o temp.o
+testproj.o : kernel.o testproj.cpp Point.o Utility.o
+	$(CPP) $(CFLAGS) testproj.cpp Point.o Utility.o kernel.o -o testproj.o
+	
+kernel.o: kernel.cpp Point.o
+	$(CPP) $(CFLAGS) -c kernel.cpp -o kernel.o	
 
 tria.o: triangulate.cpp Point.o DCEL.o Utility.o Ymonotone.o convex.o
 	$(CPP) $(CFLAGS) -c triangulate.cpp -o tria.o
