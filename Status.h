@@ -9,7 +9,12 @@ Contains the function declaration of the Status used for polygon monotonization
 #include "Point.h"
 #include "Utility.h"
 
-namespace cg {	
+namespace cg {
+	/**
+	A wrapper class of std::map in STL to implement the <b>Status</b> data-structure in SweepLine algorithms.
+	It can be used to store the line-segments(along with their Helper) to the left of an event point in Monotonization module, to set or
+	retrieve the helper of an edge in the current status, and to find the nearest edge to the left of an event point.
+	*/
 	class Status {
 		private:
 			struct compareEdge {

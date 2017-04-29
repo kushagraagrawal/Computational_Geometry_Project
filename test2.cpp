@@ -1,3 +1,6 @@
+/** \file
+Contains the main function to run triangulation module.
+*/
 #include <set>
 #include <utility>
 #include <chrono>
