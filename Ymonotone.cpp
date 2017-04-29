@@ -64,6 +64,7 @@ namespace cg{
 		edge.first  = D.vertex_record[(index-1+v_size)%v_size].point;
 		edge.second = D.vertex_record[index].point;
 		int helper = tau.getHelper(edge);
+		std::cout << "Helper of " << edge.first << " " <<edge.second << " is " << helper <<"\n";
 		if(vertex_type[helper] == MERGE_VERTEX)
 			D.addEdge(index,helper);
 		tau.remove(edge);
@@ -149,7 +150,7 @@ namespace cg{
 	<b> Output: </b> none.
 	*/
 	void make_monotone(cg::DCEL &D){
-		
+		std::cout << "\n---------------------Monotonizing----------------------\n";
 		auto cmp = [](const cg::vertex &A,const cg::vertex &B){
 			// return true if A lies below B
 			return below(A.point,B.point);
@@ -168,7 +169,7 @@ namespace cg{
 			cg::vertex v = Q.top();
 			Q.pop();
 			int index = v.edge_id;		// edge_id is same as vertex_id
-			std::cout << "Handling " << v.point << "as " << vertex_type[index] <<"\n";
+			std::cout << "Handling p"<<index <<" " << v.point << "as " << vertex_type[index] <<"\n";
 			switch(vertex_type[index]){
 				case START_VERTEX:	handle_start_vertex(D,index,tau,vertex_type);
 									break;
@@ -183,6 +184,7 @@ namespace cg{
 			}
 			std::cout << "Handled" << v.point << "\n----------------------\n";
 		}
+		std::cout << "\n---------------------Completed Monotone----------------------\n";
 	}
 
 }

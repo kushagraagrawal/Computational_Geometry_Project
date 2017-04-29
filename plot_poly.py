@@ -24,6 +24,7 @@ for arg in sys.argv[1:]:
 	fig.append(plt.figure())
 	for e in edge:
 		plt.plot([e[0], e[2]], [e[1], e[3]], color = 'brown', marker = 'o')
+	plt.gca().set_aspect('equal', adjustable='box')
 
 plt.show()
 

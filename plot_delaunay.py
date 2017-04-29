@@ -19,7 +19,7 @@ for pair in tempEdge[:-1]:
 	edge.append(temp)
 
 for e in edge:
-	plt.plot([e[0], e[2]], [e[1], e[3]], color = 'brown', marker = 'o')
+	plt.plot([e[0], e[2]], [e[1], e[3]], color = 'brown', marker = 'o',linewidth =2)
 plt.gca().set_aspect('equal', adjustable='box')
 
 with open(sys.argv[2],'r') as circlefile:
