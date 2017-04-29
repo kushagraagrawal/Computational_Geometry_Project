@@ -1,8 +1,16 @@
 /*! \mainpage Computational Geometry Project Documentation
 
 \section intro_sec Introduction
-This project is a part of the coursework for the course <b><em> Selected Toipcs in Computer Science (CS F441) </em></b> under the guidance of <em >Dr. Tathagat Ray </em>.
+This project is a part of the coursework for the course <b><em> Selected Toipcs in Computer Science (CS F441) </em></b> under the guidance of <em >Dr. Tathagat Ray </em>. This API consists of four major parts.
+<ol> <li> Convex Hull Algorithms (i.e Graham's Scan, Jravis March & Andrew's Algorithm) </li>
+	<li> Monotonization and triangulation of a simple polygon </li>
+	<li> Triangulation of a set of points and Delaunay Triangulation </li>
+	<li> Algorithm to find the Kernel of a star shaped polygon </li>
+</ol>
+
 
 <a href="../report1.html">Assignment 1 Report</a> <br>
-<a href="../report2.html">Assignment 2 Report</a>
+<a href="../report2.html">Assignment 2 Report</a> <br>
+<a href="../report3.html">Assignment 3 Report</a> <br>
+<a href="../report4.html">Project Report</a>
 */
